@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.supers.Robot
 @TeleOp(name="WristTest")
 class WristTest: LinearOpMode() {
     override fun runOpMode() {
-        val lServo: CRServo = hardwareMap.get(CRServo::class.java, "lServo")
-        val rServo: CRServo = hardwareMap.get(CRServo::class.java, "rServo")
-        val wrist = WristCont(lServo, rServo)
+        val lServo: Servo = hardwareMap.get(Servo::class.java, "wrist1")
+        val rServo: Servo = hardwareMap.get(Servo::class.java, "wrist2")
+        val wrist = Wrist(lServo, rServo)
 
         val dashboard: FtcDashboard? = FtcDashboard.getInstance()
         val dashboardTelemetry = dashboard!!.telemetry
