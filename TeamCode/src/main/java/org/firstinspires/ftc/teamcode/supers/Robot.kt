@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.supers
 
 import com.acmerobotics.dashboard.FtcDashboard
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.IMU
+import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.LinearSlide
+import org.firstinspires.ftc.teamcode.ServoHand
+import org.firstinspires.ftc.teamcode.Wrist
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
@@ -16,9 +20,14 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
     var lb: DcMotor
     var rt: DcMotor
     var rb: DcMotor
-    private var motors: Array<DcMotor>
+    var motors: Array<DcMotor>
 
-    var imu: IMU
+    var hand: ServoHand
+    var wrist: Wrist
+    var linearActuator: LinearSlide
+
+    var odo: GoBildaPinpointDriver
+    var octoQuad: OctoQuad
 
     // Declare gamepads
     var gamepadState1: GamepadState = GamepadState()
@@ -50,6 +59,9 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
         // IMU (Used until odometry)
         imu = hardwareMap.get(IMU::class.java, "imu")
         val parameters: IMU.Parameters = IMU.Parameters(RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP))
+        hand = ServoHand(hardwareMap.get(Servo::class.java, "hand"), 0.0, 1.0)
+        wrist = Wrist(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(Servo::class.java, "wrist2"))
+        linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
 
         imu.initialize(parameters)
     }
