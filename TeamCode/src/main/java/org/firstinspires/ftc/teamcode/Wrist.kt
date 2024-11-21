@@ -10,14 +10,14 @@ class Wrist(private val lServo: Servo, private val rServo: Servo) {
 
     fun twist(delta: Double) {
         lServoTarget = lServo.position + delta
-        rServoTarget = rServo.position - delta
+        rServoTarget = rServo.position + delta
 
         updatePositions()
     }
 
     fun turn(delta: Double) {
-        lServoTarget = lServo.position + sign(delta) * delta
-        rServoTarget = rServo.position + sign(delta) * delta
+        lServoTarget = lServo.position - delta
+        rServoTarget = rServo.position + delta
 
         updatePositions()
     }

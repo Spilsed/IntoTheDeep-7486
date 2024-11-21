@@ -22,13 +22,13 @@ class WristTest: LinearOpMode() {
         waitForStart()
 
         while (isStarted && !isStopRequested) {
-            wrist.twist(gamepad1.left_stick_y.toDouble() / 1)
-            wrist.turn(gamepad1.left_stick_x.toDouble() / 1)
+            wrist.twist(gamepad1.left_stick_y.toDouble() / 50)
+            wrist.turn(gamepad1.left_stick_x.toDouble() / 50)
 
-            //dashboardTelemetry.addData("Turn", wrist.getTurn())
-            //dashboardTelemetry.addData("Twist", wrist.getTwist())
-            //dashboardTelemetry.addData("L", wrist.lServoTarget)
-            //dashboardTelemetry.addData("R", wrist.rServoTarget)
+            dashboardTelemetry.addData("Turn", wrist.getTurn())
+            dashboardTelemetry.addData("Twist", wrist.getTwist())
+            dashboardTelemetry.addData("L", wrist.lServoTarget)
+            dashboardTelemetry.addData("R", wrist.rServoTarget)
             dashboardTelemetry.update()
         }
     }
