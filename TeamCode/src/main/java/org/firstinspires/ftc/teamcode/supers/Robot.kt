@@ -5,8 +5,8 @@ import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
-import com.qualcomm.robotcore.hardware.IMU
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.LinearSlide
 import org.firstinspires.ftc.teamcode.ServoHand
 import org.firstinspires.ftc.teamcode.Wrist
@@ -63,7 +63,20 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
         wrist = Wrist(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(Servo::class.java, "wrist2"))
         linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
 
-        imu.initialize(parameters)
+        odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
+        odo.setOffsets(-174.625, 142.38478)
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
+
+        /*
+        Set the direction that each of the two odometry pods count. The X (forward) pod should
+        increase when you move the robot forward. And the Y (strafe) pod should increase when
+        you move the robot to the left.
+        */
+
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        odo.resetPosAndIMU();
+
+        octoQuad = hardwareMap.get(OctoQuad::class.java, "octo")
     }
 }
 
