@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RoadRunner
+package org.firstinspires.ftc.teamcode.roadRunner
 
 import com.acmerobotics.roadrunner.DualNum
 import com.acmerobotics.roadrunner.Time
@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.Twist2dDual
 import com.acmerobotics.roadrunner.Vector2dDual
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver
+import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 
 class PinpointLocalizer(val odo: GoBildaPinpointDriver) : Localizer {
     var pose = odo.position
