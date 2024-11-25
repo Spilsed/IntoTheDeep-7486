@@ -25,6 +25,8 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
     var hand: ServoHand
     var wrist: Wrist
     var linearActuator: LinearSlide
+    var rotationalArm: RotationalArm
+    var lift: Lift
 
     var odo: GoBildaPinpointDriver
     var octoQuad: OctoQuad
@@ -62,6 +64,8 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
         hand = ServoHand(hardwareMap.get(Servo::class.java, "hand"), 0.0, 1.0)
         wrist = Wrist(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(Servo::class.java, "wrist2"))
         linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
+        rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), 0, 10)
+        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 1.0, 100, 0, 0.5, 0.0)
 
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
         odo.setOffsets(-174.625, 142.38478)
