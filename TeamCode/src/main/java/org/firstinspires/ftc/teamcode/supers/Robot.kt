@@ -6,10 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver
-import org.firstinspires.ftc.teamcode.LinearSlide
-import org.firstinspires.ftc.teamcode.ServoHand
-import org.firstinspires.ftc.teamcode.Wrist
+import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
+import org.firstinspires.ftc.teamcode.parts.Lift
+import org.firstinspires.ftc.teamcode.parts.LinearSlide
+import org.firstinspires.ftc.teamcode.parts.RotationalArm
+import org.firstinspires.ftc.teamcode.parts.ServoHand
+import org.firstinspires.ftc.teamcode.parts.Wrist
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
