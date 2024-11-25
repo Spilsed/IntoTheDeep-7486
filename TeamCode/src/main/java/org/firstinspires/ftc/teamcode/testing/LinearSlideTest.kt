@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.LinearSlide
+import org.firstinspires.ftc.teamcode.parts.LinearSlide
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 @TeleOp(name="LinearSlideTest")
