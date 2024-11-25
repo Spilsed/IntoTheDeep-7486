@@ -42,12 +42,12 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
         val hardwareMap: HardwareMap = opMode.hardwareMap
 
         // Get all the motors
-        lt = hardwareMap.get(DcMotor::class.java, "lf")
+        lf = hardwareMap.get(DcMotor::class.java, "lf")
         lb = hardwareMap.get(DcMotor::class.java, "lb")
-        rt = hardwareMap.get(DcMotor::class.java, "rf")
+        rf = hardwareMap.get(DcMotor::class.java, "rf")
         rb = hardwareMap.get(DcMotor::class.java, "rb")
 
-        motors = arrayOf(lt, lb, rt, rb)
+        motors = arrayOf(lf, lb, rf, rb)
 
         // Make sure all the motors are in what should be the default
         for (motor in motors) {
