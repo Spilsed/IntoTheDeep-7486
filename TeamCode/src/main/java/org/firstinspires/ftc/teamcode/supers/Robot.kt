@@ -16,9 +16,9 @@ import org.firstinspires.ftc.teamcode.util.GamepadState
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
 class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
     // Declare all the hardware
-    var lt: DcMotor
+    var lf: DcMotor
     var lb: DcMotor
-    var rt: DcMotor
+    var rf: DcMotor
     var rb: DcMotor
     var motors: Array<DcMotor>
 
