@@ -3,11 +3,8 @@ package org.firstinspires.ftc.teamcode.testing
 import com.acmerobotics.dashboard.FtcDashboard
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.Wrist
-import org.firstinspires.ftc.teamcode.WristCont
-import org.firstinspires.ftc.teamcode.supers.Robot
+import org.firstinspires.ftc.teamcode.parts.Wrist
 
 @TeleOp(name="WristTest")
 class WristTest: LinearOpMode() {
