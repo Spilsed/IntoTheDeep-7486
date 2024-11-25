@@ -22,16 +22,18 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
     var rb: DcMotor
     var motors: Array<DcMotor>
 
+    // Robot Parts
     var hand: ServoHand
     var wrist: Wrist
     var linearActuator: LinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
 
+    // Misc
     var odo: GoBildaPinpointDriver
     var octoQuad: OctoQuad
 
-    // Declare gamepads
+    // Declare game pads
     var gamepadState1: GamepadState = GamepadState()
     var gamepadState2: GamepadState = GamepadState()
 
@@ -58,15 +60,14 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
             motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         }
 
-        // IMU (Used until odometry)
-        imu = hardwareMap.get(IMU::class.java, "imu")
-        val parameters: IMU.Parameters = IMU.Parameters(RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP))
+        // Initialize the robot parts
         hand = ServoHand(hardwareMap.get(Servo::class.java, "hand"), 0.0, 1.0)
         wrist = Wrist(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(Servo::class.java, "wrist2"))
         linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), 0, 10)
         lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 1.0, 100, 0, 0.5, 0.0)
 
+        // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
         odo.setOffsets(-174.625, 142.38478)
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
