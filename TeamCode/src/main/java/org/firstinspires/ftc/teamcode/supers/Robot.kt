@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
-class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
+class Robot (opMode: OpMode, val auto: Boolean = false) {
     // Declare all the hardware
     var lf: DcMotor
     var lb: DcMotor
@@ -68,6 +68,17 @@ class Robot (opMode: OpMode, resetEncoders: Boolean = true) {
         linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), 0, 10)
         lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 1.0, 100, 0, 0.5, 0.0)
+
+        linearActuator.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+        lift.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+        if (auto) {
+            rotationalArm.motor1.mode = DcMotor.RunMode.RUN_TO_POSITION
+            rotationalArm.motor2.mode = DcMotor.RunMode.RUN_TO_POSITION
+        } else {
+            rotationalArm.motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            rotationalArm.motor2.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        }
 
         // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
