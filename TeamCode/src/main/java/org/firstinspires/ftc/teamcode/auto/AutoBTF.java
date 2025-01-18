@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.supers.Robot;
 public class AutoBTF extends LinearOpMode {
     @Override
     public void runOpMode() {
-        Robot r = new Robot(this, false);
+        Robot r = new Robot(this);
 
         Action trajectory0 = r.getDrive().actionBuilder(new Pose2d(36.00, 60.00, Math.toRadians(270.00)))
                 .splineToLinearHeading(new Pose2d(37.00, 39.00, Math.toRadians(90.00)), Math.toRadians(-90.00))
