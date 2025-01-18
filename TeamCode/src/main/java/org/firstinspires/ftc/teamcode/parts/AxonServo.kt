@@ -19,7 +19,7 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
         }
 
     // Target position of the servo
-    var targetPosition: Double = 0.8
+    var targetPosition: Double = 0.35
         set(value) {
             // Make sure the value is in range
             field = clampf(value, 0.0, 1.0)
@@ -27,7 +27,7 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
 
     fun updatePosition() {
         if (abs(position - targetPosition) >= 0.01) {
-            servo.power = sign(targetPosition - position) * 0.5
+            servo.power = sign(position - targetPosition) * 0.5
         } else {
             servo.power = 0.0
         }
