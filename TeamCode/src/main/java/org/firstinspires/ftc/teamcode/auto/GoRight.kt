@@ -20,6 +20,9 @@ class GoRight : LinearOpMode() {
 
         mecanumDrive(0.0, 1.0, 0.0)
 
+        telemetry.addData("POWER", r.motors[0].power)
+        telemetry.update()
+
         sleep(1000)
 
         for (motor in r.motors) {
@@ -30,10 +33,10 @@ class GoRight : LinearOpMode() {
     private fun mecanumDrive(ly: Double, lx: Double, rx: Double) {
         val denominator: Double = max(abs(ly) + abs(lx) + abs(rx), 1.0)
 
-        motorPowers[0] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[1] = (-gamepad1.left_stick_y - -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[2] = (-gamepad1.left_stick_y - -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[3] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        r.motors[0].power = (-gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        r.motors[1].power = (-gamepad1.left_stick_y - -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        r.motors[2].power = (-gamepad1.left_stick_y - -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        r.motors[3].power = (-gamepad1.left_stick_y + -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
 
         for (i in 0..3 step 1) {
             r.motors[i].power = motorPowers[i]
