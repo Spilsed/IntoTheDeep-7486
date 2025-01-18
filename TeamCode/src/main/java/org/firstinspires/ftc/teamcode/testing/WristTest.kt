@@ -19,6 +19,7 @@ class WristTest: LinearOpMode() {
         while (opModeIsActive()) {
             r.wrist.turn(gamepad1.left_stick_y.toDouble())
             r.wrist.twist(gamepad1.left_stick_x.toDouble())
+            r.wrist.updatePositions()
         }
     }
 }
