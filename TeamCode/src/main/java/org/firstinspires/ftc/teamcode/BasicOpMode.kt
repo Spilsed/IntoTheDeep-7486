@@ -68,17 +68,17 @@ class BasicOpMode : LinearOpMode() {
         }
 
         // Wrist
-        r.wrist.turn(gamepad2.right_stick_y.toDouble())
-        r.wrist.twist(gamepad2.right_stick_x.toDouble())
+        r.wrist.turn(gamepad2.right_stick_y.toDouble() / 5.0)
+        r.wrist.twist(gamepad2.right_stick_x.toDouble() / 5.0)
     }
 
     private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
 
-        motorPowers[0] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[1] = (-gamepad1.left_stick_y - -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[2] = (-gamepad1.left_stick_y - -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
-        motorPowers[3] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        motorPowers[0] = (-gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        motorPowers[1] = (-gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        motorPowers[2] = (-gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
+        motorPowers[3] = (-gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x).toDouble() / denominator * speedFactor
 
         for (i in 0..3 step 1) {
             r.motors[i].power = lerp(r.motors[i].power, motorPowers[i], 0.3)
