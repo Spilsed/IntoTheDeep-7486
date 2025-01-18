@@ -79,7 +79,7 @@ class Robot (opMode: OpMode, auto: Boolean = false) {
         octoQuad.saveParametersToFlash()
 
         // Initialize the robot parts
-        hand = (hardwareMap.get(CRServo::class.java, "hand"))
+        hand = hardwareMap.get(CRServo::class.java, "hand")
         //wrist = WristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"), octoQuad, 0, 1, 0.2, arrayOf(0, 0), arrayOf(1000, 1000))
         wrist = Wrist(AxonServo(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(Servo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
         linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
