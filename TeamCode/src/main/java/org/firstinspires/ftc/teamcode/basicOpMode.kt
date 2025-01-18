@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode
 
-import com.acmerobotics.roadrunner.range
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.supers.Robot
 import org.firstinspires.ftc.teamcode.util.lerp
-import org.firstinspires.ftc.teamcode.util.slerp
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -74,7 +72,7 @@ class basicOpMode : LinearOpMode() {
     }
 
     fun mecanumDrive() {
-        var denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
+        val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
 
         motorPowers[0] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
         motorPowers[1] = (-gamepad1.left_stick_y - -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
