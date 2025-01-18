@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.parts.AxonServo
 import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
+import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.parts.Wrist
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
@@ -33,7 +34,7 @@ class Robot (opMode: OpMode) {
 
     // Robot Parts
     var hand: CRServo
-    var wrist: Wrist
+    var wrist: ManualWristCont
     var linearActuator: ContLinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
@@ -80,8 +81,8 @@ class Robot (opMode: OpMode) {
 
         // Initialize the robot parts
         hand = hardwareMap.get(CRServo::class.java, "hand")
-        //wrist = WristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"), octoQuad, 0, 1, 0.2, arrayOf(0, 0), arrayOf(1000, 1000))
-        wrist = Wrist(AxonServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
+        wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
+        // wrist = Wrist(AxonServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
         linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
         lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)

@@ -67,7 +67,9 @@ class BasicOpMode : LinearOpMode() {
             r.hand.power = 0.0
         }
 
-        // TODO: Wrist
+        // Wrist
+        r.wrist.turn(gamepad2.right_stick_y.toDouble())
+        r.wrist.twist(gamepad2.right_stick_x.toDouble())
     }
 
     private fun mecanumDrive() {

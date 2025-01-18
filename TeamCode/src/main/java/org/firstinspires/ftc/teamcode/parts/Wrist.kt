@@ -42,42 +42,15 @@ class Wrist(val lServo: AxonServo, val rServo: AxonServo) {
     }
 }
 
-class ManualWristCont(private val lServo: CRServo, private val rServo: CRServo, private val octoQuad: OctoQuad, private val lIdx: Int, private val rIdx: Int, private val servoPower: Double, private val mins: Array<Int>, private val maxes: Array<Int>) {
-    var turnableDirection: Int = 0
-    var twistableDirection: Int = 0
-
-    var wantedTurn: Int = 0
-    var wantedTwist: Int = 0
-
-    fun twist(delta: Int) {
-        wantedTwist = getTwist() + delta
-
-        lServo.power = servoPower
-        rServo.power = -servoPower
-    }
-
-    fun turn(delta: Int) {
-        wantedTurn = getTurn() + delta
-
-        lServo.power = -servoPower
-        rServo.power = servoPower
-    }
-
-    fun setPower(power: Double) {
+class ManualWristCont(private val lServo: CRServo, private val rServo: CRServo) {
+    fun twist(power: Double) {
         lServo.power = power
         rServo.power = power
     }
 
-    fun getTurn(): Int {
-        return (octoQuad.readSinglePosition(lIdx) + octoQuad.readSinglePosition(rIdx)) / 2
-    }
-
-    fun getTwist(): Int {
-        return abs(octoQuad.readSinglePosition(lIdx) - octoQuad.readSinglePosition(rIdx))
-    }
-
-    fun update() {
-
+    fun turn(power: Double) {
+        lServo.power = power
+        rServo.power = -power
     }
 }
 
