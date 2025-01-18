@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.util.clampf
 
-class AxonServo(val servo: Servo, val analog: AnalogInput) {
+class AxonServo(val servo: CRServo, val analog: AnalogInput) {
     // Holds the current position of the servo
     var position: Double
         get() {
@@ -24,4 +24,12 @@ class AxonServo(val servo: Servo, val analog: AnalogInput) {
             // Make the servo go there
             servo.position = field
         }
+
+    fun updatePosition {
+        if (abs(position - targetPosition) >= 0.01) {
+            servo.power = sign(position - targetPosition) * 0.5
+        } else {
+            servo.power = 0.0
+        }
+    }
 }
