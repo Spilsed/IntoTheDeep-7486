@@ -72,12 +72,16 @@ class BasicOpMode : LinearOpMode() {
             r.wrist.lServo.power = 0.25
         } else if (gamepad2.dpad_down) {
             r.wrist.lServo.power = -0.25
+        } else {
+            r.wrist.lServo.power = 0.0
         }
 
         if (gamepad2.dpad_left) {
             r.wrist.rServo.power = 0.25
         } else if (gamepad2.dpad_right) {
             r.wrist.rServo.power = -0.25
+        } else {
+            r.wrist.rServo.power = 0.0
         }
 
         // r.wrist.turn(gamepad2.right_stick_y.toDouble() / 5.0)
