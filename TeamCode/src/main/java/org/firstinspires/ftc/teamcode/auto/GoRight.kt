@@ -18,7 +18,7 @@ class GoRight : LinearOpMode() {
 
         waitForStart()
 
-        mecanumDrive(0.0, 0.25, 0.0)
+        mecanumDrive(0.0, 1.0, 0.0)
 
         sleep(1000)
 
