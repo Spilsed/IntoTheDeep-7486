@@ -33,10 +33,10 @@ class GoRight : LinearOpMode() {
     private fun mecanumDrive(ly: Double, lx: Double, rx: Double) {
         val denominator: Double = max(abs(ly) + abs(lx) + abs(rx), 1.0)
 
-        motorPowers[0] = (-ly + -lx + rx) / denominator * speedFactor
-        motorPowers[1] = (-ly - -lx + rx) / denominator * speedFactor
-        motorPowers[2] = (-ly - -lx - rx) / denominator * speedFactor
-        motorPowers[3] = (-ly + -lx - rx) / denominator * speedFactor
+        motorPowers[0] = (-ly + lx + rx) / denominator * speedFactor
+        motorPowers[1] = (-ly - lx + rx) / denominator * speedFactor
+        motorPowers[2] = (-ly - lx - rx) / denominator * speedFactor
+        motorPowers[3] = (-ly + lx - rx) / denominator * speedFactor
 
         for (i in 0..3 step 1) {
             r.motors[i].power = motorPowers[i]
