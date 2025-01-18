@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.supers.Robot
 import kotlin.math.abs
 import kotlin.math.max
 
-@Autonomous(name = "GoRight", group = "autonomous")
+@Autonomous(name = "GoRight")
 class GoRight : LinearOpMode() {
     lateinit var r: Robot
 
@@ -14,13 +14,14 @@ class GoRight : LinearOpMode() {
     private var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
     override fun runOpMode() {
-        r = Robot(this)
+        val r = Robot(this)
 
         waitForStart()
 
-        mecanumDrive(0.0, 0.5, 0.0)
+        mecanumDrive(0.0, 0.25, 0.0)
 
-        telemetry.addData("POWER", r.motors[0].power)
+        telemetry.addData("REAL POW", r.motors[0].power)
+        telemetry.addData("POW", motorPowers[0])
         telemetry.update()
 
         sleep(1000)
@@ -33,13 +34,13 @@ class GoRight : LinearOpMode() {
     private fun mecanumDrive(ly: Double, lx: Double, rx: Double) {
         val denominator: Double = max(abs(ly) + abs(lx) + abs(rx), 1.0)
 
-        r.motors[0].power = (-ly + -lx + rx) / denominator * speedFactor
-        r.motors[1].power = (-ly - -lx + rx) / denominator * speedFactor
-        r.motors[2].power = (-ly - -lx - rx) / denominator * speedFactor
-        r.motors[3].power = (-ly + -lx - rx) / denominator * speedFactor
+        motorPowers[0] = (-ly + -lx + rx) / denominator * speedFactor
+        motorPowers[1] = (-ly - -lx + rx) / denominator * speedFactor
+        motorPowers[2] = (-ly - -lx - rx) / denominator * speedFactor
+        motorPowers[3] = (-ly + -lx - rx) / denominator * speedFactor
 
         for (i in 0..3 step 1) {
-            r.motors[i].power = motorPowers[i]
+            r.motors[i].power = r.motors[i].power
         }
     }
 }
