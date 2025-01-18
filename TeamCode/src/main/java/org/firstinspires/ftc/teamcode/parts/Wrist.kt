@@ -42,7 +42,7 @@ class Wrist(val lServo: AxonServo, val rServo: AxonServo) {
     }
 }
 
-class ManualWristCont(private val lServo: CRServo, private val rServo: CRServo) {
+class ManualWristCont(val lServo: CRServo, val rServo: CRServo) {
     fun twist(power: Double) {
         lServo.power = power
         rServo.power = power

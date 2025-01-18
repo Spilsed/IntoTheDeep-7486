@@ -48,9 +48,9 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("ARMMOVE", gamepad2.left_stick_y.toDouble() / 2.0)
 
         // Linear Actuator
-        if (gamepad2.dpad_up) {
+        if (gamepad2.a) {
             r.linearActuator.motor.power = -0.4
-        } else if (gamepad2.dpad_down) {
+        } else if (gamepad2.b) {
             r.linearActuator.motor.power = 0.4
         } else {
             r.linearActuator.motor.power = 0.0
@@ -68,8 +68,20 @@ class BasicOpMode : LinearOpMode() {
         }
 
         // Wrist
-        r.wrist.turn(gamepad2.right_stick_y.toDouble() / 5.0)
-        r.wrist.twist(gamepad2.right_stick_x.toDouble() / 5.0)
+        if (gamepad2.dpad_up) {
+            r.wrist.lServo.power = 0.25
+        } else if (gamepad2.dpad_down) {
+            r.wrist.lServo.power = -0.25
+        }
+
+        if (gamepad2.dpad_left) {
+            r.wrist.rServo.power = 0.25
+        } else if (gamepad2.dpad_right) {
+            r.wrist.rServo.power = -0.25
+        }
+
+        // r.wrist.turn(gamepad2.right_stick_y.toDouble() / 5.0)
+        // r.wrist.twist(gamepad2.right_stick_x.toDouble() / 5.0)
     }
 
     private fun mecanumDrive() {
