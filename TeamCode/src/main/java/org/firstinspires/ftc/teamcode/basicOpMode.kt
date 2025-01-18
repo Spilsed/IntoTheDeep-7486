@@ -31,7 +31,7 @@ class BasicOpMode : LinearOpMode() {
         }
     }
 
-    fun gamepad1Logic() {
+    private fun gamepad1Logic() {
         mecanumDrive()
 
         // Slow mode
@@ -42,7 +42,7 @@ class BasicOpMode : LinearOpMode() {
         }
     }
 
-    fun gamepad2Logic() {
+    private fun gamepad2Logic() {
         // Rotational Arm
         r.dashboardTelemetry.addData("ARM1", r.rotationalArm.power)
         r.dashboardTelemetry.addData("ARMMOVE", gamepad2.left_stick_y.toDouble() / 2.0)
@@ -70,7 +70,7 @@ class BasicOpMode : LinearOpMode() {
         // TODO: Wrist
     }
 
-    fun mecanumDrive() {
+    private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
 
         motorPowers[0] = (-gamepad1.left_stick_y + -gamepad1.left_stick_x + gamepad1.right_stick_x).toDouble() / denominator * speedFactor
