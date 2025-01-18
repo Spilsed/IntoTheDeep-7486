@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.parts
 
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.CRServo
-import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.util.clampf
 import kotlin.math.abs
 import kotlin.math.sign
