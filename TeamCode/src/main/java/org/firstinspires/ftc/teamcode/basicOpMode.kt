@@ -8,11 +8,10 @@ import kotlin.math.abs
 import kotlin.math.max
 
 @TeleOp(name = "Basic")
-class basicOpMode : LinearOpMode() {
+class BasicOpMode : LinearOpMode() {
     lateinit var r: Robot
-    var speedFactor: Double = 0.8
-
-    var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
+    private var speedFactor: Double = 0.8
+    private var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
     override fun runOpMode() {
         r = Robot(this)
