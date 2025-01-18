@@ -1,22 +1,29 @@
 package org.firstinspires.ftc.teamcode.supers
 
 import com.acmerobotics.dashboard.FtcDashboard
+import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.hardware.AnalogInput
+import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.parts.AxonServo
 import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.parts.Lift
-import org.firstinspires.ftc.teamcode.parts.LinearSlide
+import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.parts.ServoHand
 import org.firstinspires.ftc.teamcode.parts.Wrist
+import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
-class Robot (opMode: OpMode, val auto: Boolean = false) {
+class Robot (opMode: OpMode, auto: Boolean = false) {
     // Declare all the hardware
     var lf: DcMotor
     var lb: DcMotor
@@ -25,15 +32,16 @@ class Robot (opMode: OpMode, val auto: Boolean = false) {
     var motors: Array<DcMotor>
 
     // Robot Parts
-    var hand: ServoHand
+    var hand: CRServo
     var wrist: Wrist
-    var linearActuator: LinearSlide
+    var linearActuator: ContLinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
 
     // Misc
     var odo: GoBildaPinpointDriver
     var octoQuad: OctoQuad
+    val drive: MecanumDrive
 
     // Declare game pads
     var gamepadState1: GamepadState = GamepadState()
@@ -59,30 +67,28 @@ class Robot (opMode: OpMode, val auto: Boolean = false) {
         for (motor in motors) {
             motor.power = 0.0
             motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+            motor.mode = DcMotor.RunMode.RESET_ENCODERS
             motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         }
 
+        lf.direction = DcMotorSimple.Direction.REVERSE
+        lb.direction = DcMotorSimple.Direction.REVERSE
+
+        octoQuad = hardwareMap.get(OctoQuad::class.java, "octo")
+        octoQuad.setSingleEncoderDirection(0, OctoQuadBase.EncoderDirection.FORWARD)
+        octoQuad.saveParametersToFlash()
+
         // Initialize the robot parts
-        hand = ServoHand(hardwareMap.get(Servo::class.java, "hand"), 0.0, 1.0)
-        wrist = Wrist(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(Servo::class.java, "wrist2"))
-        linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
-        rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), 0, 10)
-        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 1.0, 100, 0, 0.5, 0.0)
-
-        linearActuator.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-        lift.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-
-        if (auto) {
-            rotationalArm.motor1.mode = DcMotor.RunMode.RUN_TO_POSITION
-            rotationalArm.motor2.mode = DcMotor.RunMode.RUN_TO_POSITION
-        } else {
-            rotationalArm.motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
-            rotationalArm.motor2.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        }
+        hand = (hardwareMap.get(CRServo::class.java, "hand"))
+        //wrist = WristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"), octoQuad, 0, 1, 0.2, arrayOf(0, 0), arrayOf(1000, 1000))
+        wrist = Wrist(AxonServo(hardwareMap.get(Servo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(Servo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
+        linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
+        rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
+        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(Servo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
 
         // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
-        odo.setOffsets(-174.625, 142.38478)
+        odo.setOffsets(-168.0, 156.0)
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
 
         /*
@@ -91,10 +97,13 @@ class Robot (opMode: OpMode, val auto: Boolean = false) {
         you move the robot to the left.
         */
 
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        odo.resetPosAndIMU();
+        odo.setEncoderDirections(
+            GoBildaPinpointDriver.EncoderDirection.FORWARD,
+            GoBildaPinpointDriver.EncoderDirection.FORWARD
+        )
+        odo.resetPosAndIMU()
 
-        octoQuad = hardwareMap.get(OctoQuad::class.java, "octo")
+        drive = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
     }
 }
 

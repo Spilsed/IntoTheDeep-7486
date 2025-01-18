@@ -5,34 +5,32 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.parts.LinearSlide
+import org.firstinspires.ftc.teamcode.supers.Robot
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 @TeleOp(name="LinearSlideTest")
 class LinearSlideTest : LinearOpMode() {
     override fun runOpMode() {
-        val motor: DcMotor = hardwareMap.get(DcMotor::class.java, "one")
-        val linearSlide = LinearSlide(motor, 537.7, 4.75)
-
-        val dashboard: FtcDashboard? = FtcDashboard.getInstance()
-        val dashboardTelemetry = dashboard!!.telemetry
-
-        var pastGamepad1 = GamepadState()
-        pastGamepad1.updateGamepadState(gamepad1)
+        val r = Robot(this)
+        r.linearActuator.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        r.linearActuator.zeroPosition = -10000
 
         waitForStart()
 
         while (isStarted && !isStopRequested) {
-            dashboardTelemetry.addData("Current", motor.currentPosition)
-            dashboardTelemetry.addData("Target", linearSlide.motor.targetPosition)
-            dashboardTelemetry.update()
+            r.dashboardTelemetry.addData("Current", r.linearActuator.motor.currentPosition)
+            r.dashboardTelemetry.addData("Target", r.linearActuator.motor.targetPosition)
+            r.dashboardTelemetry.addData("G", (gamepad1.left_stick_y.toDouble() * 10).toInt())
+            r.dashboardTelemetry.update()
 
-            if (gamepad1.a && !pastGamepad1.a) {
-                    linearSlide.extend(1.0)
-            } else if (gamepad1.b && !pastGamepad1.b) {
-                linearSlide.extend(-1.0)
+            if (gamepad1.a) {
+                r.linearActuator.motor.power = 0.2
+            } else if (gamepad1.b) {
+                r.linearActuator.motor.power = -0.2
+            } else {
+                r.linearActuator.motor.power = 0.0
             }
-
-            pastGamepad1.updateGamepadState(gamepad1)
+            // r.linearActuator.extendTicks((gamepad1.left_stick_y.toDouble() * 10).toInt())
         }
     }
 }

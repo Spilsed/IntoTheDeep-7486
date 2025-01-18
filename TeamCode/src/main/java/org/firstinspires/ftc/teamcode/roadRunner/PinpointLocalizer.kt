@@ -15,6 +15,8 @@ class PinpointLocalizer(val odo: GoBildaPinpointDriver) : Localizer {
     var headingVelocity = velocity.getHeading(AngleUnit.RADIANS)
 
     override fun update(): Twist2dDual<Time> {
+        odo.update()
+
         pose = odo.position
         velocity = odo.velocity
         headingVelocity = velocity.getHeading(AngleUnit.RADIANS)
@@ -42,8 +44,12 @@ class PinpointLocalizer(val odo: GoBildaPinpointDriver) : Localizer {
             ))
         )
 
+        var headingDelta: Double = pose.getHeading(AngleUnit.RADIANS) - lastPose.getHeading(AngleUnit.RADIANS)
         lastPose = pose
 
-        return twist
+        return Twist2dDual(
+            twist.line,
+            DualNum.cons(headingDelta, twist.angle.drop(1))
+        )
     }
 }
