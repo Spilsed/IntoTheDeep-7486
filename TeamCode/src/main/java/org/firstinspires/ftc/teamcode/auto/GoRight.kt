@@ -14,7 +14,7 @@ class GoRight : LinearOpMode() {
     private var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
     override fun runOpMode() {
-        val r = Robot(this)
+        r = Robot(this)
 
         waitForStart()
 
