@@ -9,7 +9,6 @@ import kotlin.math.max
 @Autonomous(name = "GoRight")
 class GoRight : LinearOpMode() {
     lateinit var r: Robot
-
     private var speedFactor: Double = 0.8
     private var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
@@ -40,7 +39,7 @@ class GoRight : LinearOpMode() {
         motorPowers[3] = (-ly + -lx - rx) / denominator * speedFactor
 
         for (i in 0..3 step 1) {
-            r.motors[i].power = r.motors[i].power
+            r.motors[i].power = motorPowers[i]
         }
     }
 }
