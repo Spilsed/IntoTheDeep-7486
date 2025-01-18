@@ -27,7 +27,7 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
 
     fun updatePosition() {
         if (abs(position - targetPosition) >= 0.01) {
-            servo.power = sign(position - targetPosition) * 0.5
+            servo.power = sign(targetPosition - position) * 0.5
         } else {
             servo.power = 0.0
         }
