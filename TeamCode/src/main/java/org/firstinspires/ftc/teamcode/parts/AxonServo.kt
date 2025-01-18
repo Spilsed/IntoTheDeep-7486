@@ -20,7 +20,7 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
         }
 
     // Target position of the servo
-    var targetPosition: Double = 0.0
+    var targetPosition: Double = 0.8
         set(value) {
             // Make sure the value is in range
             field = clampf(value, 0.0, 1.0)
