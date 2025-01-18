@@ -12,6 +12,9 @@ class Wrist(val lServo: AxonServo, val rServo: AxonServo) {
         lServoTarget = lServo.position + delta
         rServoTarget = rServo.position + delta
 
+        lServo.position = lServoTarget % 1.0
+        rServo.position = rServoTarget % 1.0
+        
         updatePositions()
     }
 
@@ -19,12 +22,15 @@ class Wrist(val lServo: AxonServo, val rServo: AxonServo) {
         lServoTarget = lServo.position - delta
         rServoTarget = rServo.position + delta
 
+        lServo.position = lServoTarget % 1.0
+        rServo.position = rServoTarget % 1.0
+
         updatePositions()
     }
 
-    private fun updatePositions() {
-        lServo.position = lServoTarget % 1.0
-        rServo.position = rServoTarget % 1.0
+    fun updatePositions() {
+        lServo.updatePosition()
+        rServo.updatePosition()
     }
 
     fun getTurn(): Double {
