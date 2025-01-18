@@ -11,19 +11,19 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.parts.AxonServo
 import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
-import org.firstinspires.ftc.teamcode.parts.ServoHand
 import org.firstinspires.ftc.teamcode.parts.Wrist
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
 import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
-class Robot (opMode: OpMode, auto: Boolean = false) {
+class Robot (opMode: OpMode) {
     // Declare all the hardware
     var lf: DcMotor
     var lb: DcMotor
@@ -49,7 +49,7 @@ class Robot (opMode: OpMode, auto: Boolean = false) {
 
     // FTC Dashboard
     var dashboard: FtcDashboard? = FtcDashboard.getInstance()
-    var dashboardTelemetry = dashboard!!.telemetry
+    var dashboardTelemetry: Telemetry = dashboard!!.telemetry
 
     // Set opMode and hardwareMap
     init {
