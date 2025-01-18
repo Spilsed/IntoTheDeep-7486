@@ -67,7 +67,7 @@ class Robot (opMode: OpMode, auto: Boolean = false) {
         for (motor in motors) {
             motor.power = 0.0
             motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-            motor.mode = DcMotor.RunMode.RESET_ENCODERS
+            motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         }
 
