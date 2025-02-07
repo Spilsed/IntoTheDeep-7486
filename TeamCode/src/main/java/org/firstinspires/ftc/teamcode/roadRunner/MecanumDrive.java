@@ -70,7 +70,7 @@ public final class MecanumDrive {
 
         // feedforward parameters (in tick units)
         public double kS = 0;
-        public double kV = 0;
+        public double kV = 0.11;
         public double kA = 0;
 
         // path profile parameters (in inches)
@@ -143,7 +143,7 @@ public final class MecanumDrive {
 
             // TODO: reverse encoders if needed
             //   leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        }
+       }
 
         @Override
         public Twist2dDual<Time> update() {
@@ -160,9 +160,9 @@ public final class MecanumDrive {
             Rotation2d heading = Rotation2d.exp(angles.getYaw(AngleUnit.RADIANS));
 
             if (!initialized) {
-                initialized = true;
+               initialized = true;
 
-                lastLeftFrontPos = leftFrontPosVel.position;
+    lastLeftFrontPos = leftFrontPosVel.position;
                 lastLeftBackPos = leftBackPosVel.position;
                 lastRightBackPos = rightBackPosVel.position;
                 lastRightFrontPos = rightFrontPosVel.position;
@@ -245,7 +245,8 @@ public final class MecanumDrive {
         // ===============================================================
         // THIS IS MY PINPOINT LOCALIZER IT WAS ORIGINALLY DriveLocalizer()
         this.odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
-        this.odo.setOffsets(-168.0, 156.0);
+        this.odo.resetPosAndIMU();
+        this.odo.setOffsets(3.175, -381.2);
         this.odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         this.odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
         this.odo.resetPosAndIMU();

@@ -16,6 +16,7 @@ import com.acmerobotics.roadrunner.ftc.LateralPushTest;
 import com.acmerobotics.roadrunner.ftc.LateralRampLogger;
 import com.acmerobotics.roadrunner.ftc.ManualFeedforwardTuner;
 import com.acmerobotics.roadrunner.ftc.MecanumMotorDirectionDebugger;
+import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -24,6 +25,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive;
+import org.firstinspires.ftc.teamcode.roadRunner.PinpointLocalizer;
 import org.firstinspires.ftc.teamcode.roadRunner.TankDrive;
 import org.firstinspires.ftc.teamcode.roadRunner.ThreeDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.roadRunner.TwoDeadWheelLocalizer;
@@ -75,6 +77,8 @@ public final class TuningOpModes {
                     TwoDeadWheelLocalizer dl = (TwoDeadWheelLocalizer) md.localizer;
                     parEncs.add(dl.par);
                     perpEncs.add(dl.perp);
+                } else if (md.localizer instanceof PinpointLocalizer) {
+                    PinpointLocalizer dl = (PinpointLocalizer) md.localizer;
                 } else {
                     throw new RuntimeException("unknown localizer: " + md.localizer.getClass().getName());
                 }
@@ -124,6 +128,9 @@ public final class TuningOpModes {
                     TwoDeadWheelLocalizer dl = (TwoDeadWheelLocalizer) td.localizer;
                     parEncs.add(dl.par);
                     perpEncs.add(dl.perp);
+                } else if (td.localizer instanceof PinpointLocalizer) {
+                    PinpointLocalizer dl = (PinpointLocalizer) td.localizer;
+                    perpEncs.add(new OverflowEncoder(null));
                 } else {
                     throw new RuntimeException("unknown localizer: " + td.localizer.getClass().getName());
                 }

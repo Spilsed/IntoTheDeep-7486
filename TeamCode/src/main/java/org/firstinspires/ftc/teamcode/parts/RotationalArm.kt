@@ -19,4 +19,14 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, val min: Int, val 
                 motor.power = power
             }
         }
+
+    fun update() {
+        if (motor1.currentPosition > max && power > 0.0) {
+            power = 0.0
+        }
+
+        if (motor1.currentPosition < min && power < 0.0) {
+            power = 0.0
+        }
+    }
 }

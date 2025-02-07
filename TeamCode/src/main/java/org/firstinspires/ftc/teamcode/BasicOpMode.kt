@@ -35,9 +35,9 @@ class BasicOpMode : LinearOpMode() {
         mecanumDrive()
 
         // Slow mode
-        if (gamepad1.back || !r.gamepadState1.back) {
-            speedFactor = 0.3
-        } else if (gamepad1.start || !r.gamepadState1.start) {
+        if (gamepad1.back) {
+            speedFactor = 0.2
+        } else if (gamepad1.start) {
             speedFactor = 0.8
         }
     }
@@ -54,38 +54,44 @@ class BasicOpMode : LinearOpMode() {
             r.linearActuator.motor.power = 0.4
         } else {
             r.linearActuator.motor.power = 0.0
-        }
+        } // nitinsoni81@gmail.com, anshswarnakar9@gmail.com;
 
         // Rotational Arm
-        r.rotationalArm.power = gamepad2.left_stick_y.toDouble() / 2.0
-
+        r.dashboardTelemetry.addData("ROT", r.rotationalArm.motor1.currentPosition)
+        r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
+        r.rotationalArm.update()
 
         // Hand
+        // in
         if (gamepad2.left_bumper) {
             r.hand.power = 1.0
+        // out
         } else if (gamepad2.right_bumper) {
+            r.hand.power = -1.0
+        } else {
             r.hand.power = 0.0
         }
 
+        r.dashboardTelemetry.addData("Hand power", r.hand.power)
+        r.dashboardTelemetry.addData("Right Bumper", gamepad2.right_bumper)
+        r.dashboardTelemetry.addData("Left Bumper", gamepad2.left_bumper)
+
         // Wrist
         if (gamepad2.dpad_up) {
-            r.wrist.lServo.power = 0.25
+            r.wrist.turn(0.4)
         } else if (gamepad2.dpad_down) {
-            r.wrist.lServo.power = -0.25
+            r.wrist.turn(-0.4)
         } else {
-            r.wrist.lServo.power = 0.0
+            r.wrist.turn(0.0)
         }
 
         if (gamepad2.dpad_left) {
-            r.wrist.rServo.power = 0.25
+            r.wrist.twist(0.5)
         } else if (gamepad2.dpad_right) {
-            r.wrist.rServo.power = -0.25
+            r.wrist.twist(-0.5)
         } else {
-            r.wrist.rServo.power = 0.0
+            r.wrist.twist(0.0)
         }
-
-        // r.wrist.turn(gamepad2.right_stick_y.toDouble() / 5.0)
-        // r.wrist.twist(gamepad2.right_stick_x.toDouble() / 5.0)
     }
 
     private fun mecanumDrive() {

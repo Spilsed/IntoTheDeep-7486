@@ -14,18 +14,8 @@ class MotorTest : LinearOpMode() {
         waitForStart()
 
         while (opModeIsActive()) {
-            if (gamepad1.a) {
-                for (motor in r.motors) {
-                    motor.power = 1.0
-                }
-            } else if (gamepad1.b) {
-                for (motor in r.motors) {
-                    motor.power = -1.0
-                }
-            } else {
-                for (motor in r.motors) {
-                    motor.power = 0.0
-                }
+            for (motor in r.motors) {
+                motor.power = gamepad1.left_stick_y.toDouble()
             }
 
             r.dashboardTelemetry.addData("lf", r.lf.currentPosition)

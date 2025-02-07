@@ -86,7 +86,7 @@ class Robot (opMode: OpMode) {
 
         // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
-        odo.setOffsets(-168.0, 156.0)
+        odo.setOffsets(0.0, 0.0)
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
 
         /*
