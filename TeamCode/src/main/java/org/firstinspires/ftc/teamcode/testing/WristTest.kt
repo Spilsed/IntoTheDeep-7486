@@ -14,12 +14,12 @@ class WristTest: LinearOpMode() {
         waitForStart()
 
         while (opModeIsActive()) {
+            r.wrist.turn(gamepad1.left_stick_y.toDouble() / 100)
+            r.wrist.twist(gamepad1.left_stick_x.toDouble() / 100)
+
             telemetry.addData("LWrist", r.wrist.lServo.power)
             telemetry.addData("RWrist", r.wrist.rServo.power)
             telemetry.update()
-
-            r.wrist.turn(gamepad1.left_stick_y.toDouble() / 100)
-            r.wrist.twist(gamepad1.left_stick_x.toDouble() / 100)
             // This is what makes the servos actually move this needs to be where ever the wrist is used
             //r.wrist.updatePositions()
         }
