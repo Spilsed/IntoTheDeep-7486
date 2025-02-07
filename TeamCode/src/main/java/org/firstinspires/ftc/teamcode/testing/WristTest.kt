@@ -14,8 +14,8 @@ class WristTest: LinearOpMode() {
         waitForStart()
 
         while (opModeIsActive()) {
-            r.wrist.turn(gamepad1.left_stick_y.toDouble() / 100)
-            r.wrist.twist(gamepad1.left_stick_x.toDouble() / 100)
+            r.wrist.turn(gamepad1.left_stick_y.toDouble() / 4)
+            r.wrist.twist(gamepad1.left_stick_x.toDouble() / 4)
 
             telemetry.addData("LWrist", r.wrist.lServo.power)
             telemetry.addData("RWrist", r.wrist.rServo.power)
