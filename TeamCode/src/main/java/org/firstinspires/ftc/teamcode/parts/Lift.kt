@@ -23,13 +23,13 @@ class Lift(val motor: DcMotor, val servo: CRServo, val ppr: Double, val motorRat
     }
 
     fun servoUp() {
-        servo.position = servoMax
+        //servo.position = servoMax
         isUp = true
     }
 
     fun servoDown() {
         if (length == 0.0) {
-            servo.position = servoMin
+            //servo.position = servoMin
             isUp = false
         }
     }
