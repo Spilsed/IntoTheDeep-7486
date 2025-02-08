@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.parts
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.CRServo
+
 import org.firstinspires.ftc.teamcode.util.clampi
 
 class Lift(val motor: DcMotor, val servo: CRServo, val ppr: Double, val motorRatio: Double, val motorMin: Int, val motorMax: Int, val servoMin: Double, val servoMax: Double) {
