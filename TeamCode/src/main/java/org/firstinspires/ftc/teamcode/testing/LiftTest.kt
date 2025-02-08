@@ -23,16 +23,17 @@ class LiftTest: LinearOpMode() {
 //            }
 
 
-            r.lift.servo.power = gamepad1.left_stick_y.toDouble()
-            if (gamepad1.y){
-                r.lift.servo.power = 1.0
-            }
-            if (gamepad1.x){
-                r.lift.servo.power = -1.0
-            }
-            else{
-                r.lift.servo.power = 0.0
-            }
+            r.lift.motor.power = gamepad1.left_stick_y.toDouble()
+            r.lift.servo.power = gamepad1.left_stick_x.toDouble()
+            //if (gamepad1.y){
+                //r.lift.servo.power = 1.0;
+            //}
+            //if (gamepad1.x){
+                //r.lift.servo.power = -1.0
+            //}
+            //else{
+                //r.lift.servo.power = 0.0
+            //}
         }
     }
 }
