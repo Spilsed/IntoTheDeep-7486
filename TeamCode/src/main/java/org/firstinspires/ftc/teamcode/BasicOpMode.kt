@@ -35,7 +35,8 @@ class BasicOpMode : LinearOpMode() {
 
     private fun gamepad1Logic() {
         mecanumDrive()
-
+        r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        r.lift.motor.power = gamepad2.right_stick_y.toDouble()
         // Slow mode
         if (gamepad1.back) {
             speedFactor = 0.2
@@ -94,9 +95,6 @@ class BasicOpMode : LinearOpMode() {
         } else {
             r.wrist.twist(0.0)
         }
-
-        r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        r.lift.motor.power = gamepad1.right_stick_y.toDouble()
     }
     private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
