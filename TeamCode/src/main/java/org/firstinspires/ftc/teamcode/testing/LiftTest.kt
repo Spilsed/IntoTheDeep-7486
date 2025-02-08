@@ -56,29 +56,3 @@ class LiftTest: LinearOpMode() {
         }
     }
 }*/
-package org.firstinspires.ftc.teamcode
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.CRServo
-
-class CRServoControl : OpMode() {
-
-    private lateinit var crServo: CRServo
-
-    override fun init() {
-        crServo = hardwareMap.get(CRServo::class.java, "crServo")
-    }
-     override fun loop() {
-         when {
-             gamepad1.right_bumper -> {
-                 crServo.power = 1.0
-             }
-             gamepad1.left_bumper -> {
-                 crServo.power = -1.0
-             }
-             else -> {
-                 crServo.power = 0.0
-             }
-         }
-     }
-}
