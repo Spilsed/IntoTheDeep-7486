@@ -95,6 +95,9 @@ class BasicOpMode : LinearOpMode() {
         //lift
         r.lift.motor.power = gamepad2.right_stick_x.toDouble()
         r.lift.servo.power = gamepad2.left_stick_y.toDouble()
+        if(gamepad2.x){
+            print("ok")
+        }
     }
 
     private fun mecanumDrive() {
