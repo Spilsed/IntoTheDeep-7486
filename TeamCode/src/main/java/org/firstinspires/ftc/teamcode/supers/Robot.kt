@@ -82,7 +82,7 @@ class Robot (opMode: OpMode) {
         // wrist = Wrist(AxonServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
         linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
-        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), ardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
+        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
 
         // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
