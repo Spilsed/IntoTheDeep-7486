@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode.testing
+/* package org.firstinspires.ftc.teamcode.testing
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -55,29 +55,31 @@ class LiftTest: LinearOpMode() {
 
         }
     }
-}*/
-package org.firstinspires.ftc.teamcode
+}
+*/
+package org.firstinspires.ftc.teamcode.testing
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.CRServo
 
-class CRServoControl : OpMode() {
+import com. qualcomm. robotcore. eventloop. opmode. TeleOp
+import com. qualcomm. robotcore. eventloop. opmode. LinearOpMode
+import org. firstinspires. ftc. teamcode. supers. Robot
 
-    private lateinit var crServo: CRServo
+@TeleOp(name = "Lift Test")
+class LiftTest: LinearOpMode() {
+    lateinit var r: Robot
 
-    override fun init() {
-        crServo = hardwareMap.get(CRServo::class.java, "crServo")
-    }
-    override fun loop() {
-        when {
-            gamepad1.right_bumper -> {
-                crServo.power = 1.0
-            }
-            gamepad1.left_bumper -> {
-                crServo.power = -1.0
-            }
-            else -> {
-                crServo.power = 0.0
+    override fun runOpMode() {
+        r = Robot(this)
+
+        waitForStart()
+
+        while (opModeIsActive()) {
+            if (gamepad2.x) {
+                r.lift.servo.power = 1.0
+            } else if (gamepad2.y) {
+                r.lift.servo.power = -1.0
+            } else {
+                r.lift.servo.power = 0.0
             }
         }
     }
