@@ -26,10 +26,10 @@ class LiftTest: LinearOpMode() {
 
 
             r.lift.motor.power = gamepad1.left_stick_y.toDouble()
-            if (gamepad2.y){
+            if (gamepad1.y){
                 r.lift.servo.power = 1.0
             }
-            if (gamepad2.x){
+            if (gamepad1.x){
                 r.lift.servo.power = -1.0
             }
         }
