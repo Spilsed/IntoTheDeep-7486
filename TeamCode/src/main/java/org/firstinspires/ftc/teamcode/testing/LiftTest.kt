@@ -2,8 +2,13 @@ package org.firstinspires.ftc.teamcode.testing
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.supers.Robot
+
+private fun CRServo.update() {
+    ("NOT DONE")
+}
 
 @TeleOp(name = "Lift Test")
 class LiftTest: LinearOpMode() {
@@ -24,16 +29,17 @@ class LiftTest: LinearOpMode() {
 
 
             r.lift.motor.power = gamepad1.right_stick_y.toDouble()
-            r.lift.servo.power = gamepad1.left_stick_y.toDouble()
-            //if (gamepad1.y){
-                //r.lift.servo.power = 1.0;
-            //}
-            //if (gamepad1.x){
-                //r.lift.servo.power = -1.0
-            //}
-            //else{
-                //r.lift.servo.power = 0.0
-            //}
+            r.lift.servo.power = gamepad2.left_stick_y.toDouble()
+            r.lift.servo.update()
+            while (gamepad1.right_bumper) {
+                r.lift.servo.power = 1.0
+            }
+            while (gamepad1.left_bumper) {
+                r.lift.servo.power = -1.0
+            }
+            else {
+                r.lift.servo.power = 0.0
+            }
         }
     }
 }
