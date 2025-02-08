@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.supers.Robot
-import com.qualcomm.robotcore.hardware.CRServo
 
 @TeleOp(name = "Lift Test")
 class LiftTest: LinearOpMode() {
