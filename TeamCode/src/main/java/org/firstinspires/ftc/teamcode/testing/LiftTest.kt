@@ -74,7 +74,7 @@ class LiftTest: LinearOpMode() {
         r = Robot(this)
 
         waitForStart()
-        ateinit var crServo: CRServo
+        lateinit var crServo: CRServo
             crServo = hardwareMap.get(CRServo::class.java, "crServo")
 
                 while (opModeIsActive()) {
