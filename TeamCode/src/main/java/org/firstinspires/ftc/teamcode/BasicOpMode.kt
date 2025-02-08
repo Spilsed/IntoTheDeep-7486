@@ -67,7 +67,7 @@ class BasicOpMode : LinearOpMode() {
         // in
         if (gamepad2.left_bumper) {
             r.hand.power = 1.0
-        // out
+            // out
         } else if (gamepad2.right_bumper) {
             r.hand.power = -1.0
         } else {
@@ -94,15 +94,15 @@ class BasicOpMode : LinearOpMode() {
         } else {
             r.wrist.twist(0.0)
         }
-        //lift
-        r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        r.lift.motor.power = gamepad2.right_stick_y.toDouble()
-        r.lift.servo.power = gamepad2.right_stick_x.toDouble()
-        if(gamepad2.x) {
 
+        r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        r.lift.motor.power = gamepad1.right_stick_y.toDouble()
+        if (gamepad1.a) {
+            r.lift.expand(0.1)
+        } else if (gamepad1.b) {
+            r.lift.expand(-0.2)
         }
     }
-
     private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
 
