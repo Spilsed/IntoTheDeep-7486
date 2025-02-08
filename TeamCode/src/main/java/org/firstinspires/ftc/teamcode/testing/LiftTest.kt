@@ -70,10 +70,10 @@ class CRServoControl : OpMode() {
     }
      override fun loop() {
          when {
-             gamepad1.a -> {
+             gamepad1.right_bumper -> {
                  crServo.power = 1.0
              }
-             gamepad1.b -> {
+             gamepad1.left_bumper -> {
                  crServo.power = -1.0
              }
              else -> {
