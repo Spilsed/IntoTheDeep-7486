@@ -31,6 +31,9 @@ class LiftTest: LinearOpMode() {
             if (gamepad1.x){
                 r.lift.servo.power = -1.0
             }
+            else{
+                r.lift.servo.power = 0.0
+            }
         }
     }
 }
