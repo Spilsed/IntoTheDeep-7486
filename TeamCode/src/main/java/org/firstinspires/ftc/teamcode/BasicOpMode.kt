@@ -97,11 +97,6 @@ class BasicOpMode : LinearOpMode() {
 
         r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         r.lift.motor.power = gamepad1.right_stick_y.toDouble()
-        if (gamepad1.a) {
-            r.lift.expand(0.1)
-        } else if (gamepad1.b) {
-            r.lift.expand(-0.2)
-        }
     }
     private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
