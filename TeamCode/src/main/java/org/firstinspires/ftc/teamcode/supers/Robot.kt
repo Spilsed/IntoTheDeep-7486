@@ -5,11 +5,11 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.parts.Lift
@@ -79,10 +79,11 @@ class Robot (opMode: OpMode) {
         // Initialize the robot parts
         hand = hardwareMap.get(CRServo::class.java, "hand")
         wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
-        // wrist = Wrist(AxonServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
+        // wrist = Wrist(AxonCRServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
         linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
-        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
+        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"),
+            hardwareMap.get(Servo::class.java, "lifts") as CRServo, 537.7, 7.33, 100, 0, 0.5, 0.0)
 
         // Odometry
         odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
