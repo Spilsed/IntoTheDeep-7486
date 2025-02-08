@@ -68,7 +68,7 @@ class CRServoControl : OpMode() {
     override fun init() {
         crServo = hardwareMap.get(CRServo::class.java, "crServo")
     }
-    override fun loop() {
+    override fun loop()
         when {
             gamepad1.right_bumper -> {
                 crServo.power = 1.0
