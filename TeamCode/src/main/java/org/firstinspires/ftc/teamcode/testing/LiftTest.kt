@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.supers.Robot
+import com.qualcomm.robotcore.hardware.CRServo
 
 @TeleOp(name = "Lift Test")
 class LiftTest: LinearOpMode() {
@@ -25,6 +26,12 @@ class LiftTest: LinearOpMode() {
 
 
             r.lift.motor.power = gamepad1.left_stick_y.toDouble()
+            if (gamepad2.y){
+                r.lift.servo.power = 1.0
+            }
+            if (gamepad2.x){
+                r.lift.servo.power = -1.0
+            }
         }
     }
 }
