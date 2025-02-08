@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.supers.Robot
 import org.firstinspires.ftc.teamcode.util.lerp
 import kotlin.math.abs
 import kotlin.math.max
+import com.qualcomm.robotcore.hardware.DcMotor
 
 @TeleOp(name = "Basic")
 class BasicOpMode : LinearOpMode() {
@@ -93,8 +94,9 @@ class BasicOpMode : LinearOpMode() {
             r.wrist.twist(0.0)
         }
         //lift
-        r.lift.motor.power = gamepad2.right_stick_x.toDouble()
-        r.lift.servo.power = gamepad2.left_stick_y.toDouble()
+        r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        r.lift.motor.power = gamepad2.right_stick_y.toDouble()
+        r.lift.servo.power = gamepad2.right_stick_x.toDouble()
         if(gamepad2.x){
             print("ok")
         }
