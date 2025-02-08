@@ -98,6 +98,7 @@ class BasicOpMode : LinearOpMode() {
         r.lift.motor.power = gamepad2.right_stick_y.toDouble()
         r.lift.servo.power = gamepad2.right_stick_x.toDouble()
     }
+
     private fun mecanumDrive() {
         val denominator: Double = max(abs(gamepad1.left_stick_y) + abs(gamepad1.left_stick_x) + abs(gamepad1.right_stick_x), 1.0f).toDouble()
 
