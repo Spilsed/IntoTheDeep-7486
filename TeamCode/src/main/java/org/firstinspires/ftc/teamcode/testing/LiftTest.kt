@@ -48,7 +48,7 @@ class LiftTest: LinearOpMode() {
             }
             else if (gamepad1.left_bumper) {
                 r.lift.servo.power = -1.0
-            }
+
             else {
                 r.lift.servo.power = 0.0
             }
