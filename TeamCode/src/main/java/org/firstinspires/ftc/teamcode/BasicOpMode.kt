@@ -92,6 +92,9 @@ class BasicOpMode : LinearOpMode() {
         } else {
             r.wrist.twist(0.0)
         }
+        //lift
+        r.lift.motor.power = gamepad2.right_stick_x.toDouble()
+        r.lift.servo.power = gamepad2.left_stick_y.toDouble()
     }
 
     private fun mecanumDrive() {
