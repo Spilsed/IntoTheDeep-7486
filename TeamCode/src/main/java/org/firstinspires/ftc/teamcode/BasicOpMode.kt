@@ -98,7 +98,8 @@ class BasicOpMode : LinearOpMode() {
         r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         r.lift.motor.power = gamepad2.right_stick_y.toDouble()
         r.lift.servo.power = gamepad2.right_stick_x.toDouble()
-        if(gamepad2.x){
+        if(gamepad2.x) {
+
         }
     }
 
