@@ -15,7 +15,6 @@ class LiftTest: LinearOpMode() {
         waitForStart()
 
         r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-
         while (opModeIsActive()) {
 //            if (gamepad1.a) {
 //                r.lift.expand(0.1)
@@ -24,7 +23,7 @@ class LiftTest: LinearOpMode() {
 //            }
 
 
-            r.lift.motor.power = gamepad1.left_stick_y.toDouble()
+            r.lift.servo.power = gamepad1.left_stick_y.toDouble()
             if (gamepad1.y){
                 r.lift.servo.power = 1.0
             }
