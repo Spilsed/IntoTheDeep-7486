@@ -29,8 +29,8 @@ class LiftTest: LinearOpMode() {
 
 
             r.lift.motor.power = gamepad1.right_stick_y.toDouble()
-            r.lift.servo.power = gamepad2.left_stick_y.toDouble()
-            r.lift.servo.update()
+            r.lift.servo.power = gamepad2.right_stick_x.toDouble()
+            //r.lift.servo.update()
             /*
             while (gamepad1.right_bumper) {
                 r.lift.servo.power = 1.0
