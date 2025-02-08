@@ -62,7 +62,9 @@ package org.firstinspires.ftc.teamcode.testing
 
 import com. qualcomm. robotcore. eventloop. opmode. TeleOp
 import com. qualcomm. robotcore. eventloop. opmode. LinearOpMode
+import com.qualcomm.robotcore.hardware.CRServo
 import org. firstinspires. ftc. teamcode. supers. Robot
+import com. qualcomm. robotcore. eventloop. opmode. OpMode
 
 @TeleOp(name = "Lift Test")
 class LiftTest: LinearOpMode() {
@@ -72,8 +74,10 @@ class LiftTest: LinearOpMode() {
         r = Robot(this)
 
         waitForStart()
+        lateinit var crServo: CRServo
+            crServo = hardwareMap.get(CRServo::class.java, "crServo")
 
-        while (opModeIsActive()) {
+                while (opModeIsActive()) {
             if (gamepad2.x) {
                 r.lift.servo.power = 1.0
             } else if (gamepad2.y) {
