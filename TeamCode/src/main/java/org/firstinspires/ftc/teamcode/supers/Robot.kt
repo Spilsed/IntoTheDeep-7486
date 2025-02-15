@@ -5,13 +5,11 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.parts.GoBildaPinpointDriver
 import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
@@ -37,7 +35,6 @@ class Robot (opMode: OpMode) {
     var lift: Lift
 
     // Misc
-    var odo: GoBildaPinpointDriver
     var octoQuad: OctoQuad
     val drive: MecanumDrive
 
@@ -74,6 +71,8 @@ class Robot (opMode: OpMode) {
 
         octoQuad = hardwareMap.get(OctoQuad::class.java, "octo")
         octoQuad.setSingleEncoderDirection(0, OctoQuadBase.EncoderDirection.FORWARD)
+        octoQuad.setSingleEncoderDirection(1, OctoQuadBase.EncoderDirection.REVERSE)
+        octoQuad.setSingleEncoderDirection(2, OctoQuadBase.EncoderDirection.FORWARD)
         octoQuad.saveParametersToFlash()
 
         // Initialize the robot parts
@@ -83,23 +82,6 @@ class Robot (opMode: OpMode) {
         linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
         lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
-
-        // Odometry
-        odo = hardwareMap.get(GoBildaPinpointDriver::class.java, "odo")
-        odo.setOffsets(0.0, 0.0)
-        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-
-        /*
-        Set the direction that each of the two odometry pods count. The X (forward) pod should
-        increase when you move the robot forward. And the Y (strafe) pod should increase when
-        you move the robot to the left.
-        */
-
-        odo.setEncoderDirections(
-            GoBildaPinpointDriver.EncoderDirection.FORWARD,
-            GoBildaPinpointDriver.EncoderDirection.FORWARD
-        )
-        odo.resetPosAndIMU()
 
         drive = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
     }
