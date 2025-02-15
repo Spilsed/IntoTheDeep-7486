@@ -13,6 +13,8 @@ import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.acmerobotics.roadrunner.ftc.PositionVelocityPair;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -28,7 +30,8 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
 
     public static Params PARAMS = new Params();
 
-    public final Encoder par0, par1, perp;
+    // public final Encoder par0, par1, perp;
+    public final OctoQuad octoQuad;
 
     public final double inPerTick;
 
@@ -40,9 +43,15 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
         // TODO: make sure your config has **motors** with these names (or change them)
         //   the encoders should be plugged into the slot matching the named motor
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        par0 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par0")));
-        par1 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par1")));
-        perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "perp")));
+        // par0 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par0")));
+        // par1 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par1")));
+        // perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "perp")));
+
+        octoQuad = hardwareMap.get(OctoQuad.class, "octo");
+        octoQuad.setSingleEncoderDirection(0, OctoQuadBase.EncoderDirection.FORWARD);
+        octoQuad.setSingleEncoderDirection(1, OctoQuadBase.EncoderDirection.REVERSE);
+        octoQuad.setSingleEncoderDirection(2, OctoQuadBase.EncoderDirection.FORWARD);
+        octoQuad.saveParametersToFlash();
 
         // TODO: reverse encoder directions if needed
         //   par0.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -66,9 +75,21 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
 
     @Override
     public PoseVelocity2d update() {
-        PositionVelocityPair par0PosVel = par0.getPositionAndVelocity();
-        PositionVelocityPair par1PosVel = par1.getPositionAndVelocity();
-        PositionVelocityPair perpPosVel = perp.getPositionAndVelocity();
+        int par0Pos = octoQuad.readSinglePosition(0);
+        int par1Pos = octoQuad.readSinglePosition(1);
+        int perpPos = octoQuad.readSinglePosition(2);
+
+        int par0Vel = octoQuad.readSingleVelocity(0);
+        int par1Vel = octoQuad.readSingleVelocity(1);
+        int perpVel = octoQuad.readSingleVelocity(2);
+
+        int par0Dir = (octoQuad.getSingleEncoderDirection(0) == OctoQuadBase.EncoderDirection.FORWARD) ? 1 : -1;
+        int par1Dir = (octoQuad.getSingleEncoderDirection(1) == OctoQuadBase.EncoderDirection.FORWARD) ? 1 : -1;
+        int perpDir = (octoQuad.getSingleEncoderDirection(2) == OctoQuadBase.EncoderDirection.FORWARD) ? 1 : -1;
+
+        PositionVelocityPair par0PosVel = new PositionVelocityPair(par0Pos * par0Dir, par0Vel * par0Dir, par0Pos, par0Vel);
+        PositionVelocityPair par1PosVel = new PositionVelocityPair(par1Pos * par1Dir, par1Vel * par1Dir, par1Pos, par1Vel);
+        PositionVelocityPair perpPosVel = new PositionVelocityPair(perpPos * perpDir, perpVel * perpDir, perpPos, perpVel);
 
         FlightRecorder.write("THREE_DEAD_WHEEL_INPUTS", new ThreeDeadWheelInputsMessage(par0PosVel, par1PosVel, perpPosVel));
 
