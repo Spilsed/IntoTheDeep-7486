@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.util.lerp
 import kotlin.math.abs
 import kotlin.math.max
 import com.qualcomm.robotcore.hardware.DcMotor
-import java.lang.System.console
 
 @TeleOp(name = "Basic")
 class BasicOpMode : LinearOpMode() {
@@ -44,10 +43,6 @@ class BasicOpMode : LinearOpMode() {
     }
 
     private fun gamepad2Logic() {
-        // Rotational Arm
-        r.dashboardTelemetry.addData("ARM1", r.rotationalArm.power)
-        r.dashboardTelemetry.addData("ARMMOVE", gamepad2.left_stick_y.toDouble() / 2.0)
-
         // Linear Actuator
         if (gamepad2.a) {
             r.linearActuator.motor.power = -0.4
