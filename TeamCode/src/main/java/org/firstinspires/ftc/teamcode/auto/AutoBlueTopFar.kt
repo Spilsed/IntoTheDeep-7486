@@ -20,7 +20,7 @@ class AutoBlueTopFar : LinearOpMode() {
             .splineToConstantHeading(Vector2d(0.0, 36.00), Math.toRadians(180.00))
             .build();
 
-        drive.pose = Pose2d(36.00, 60.00, Math.toRadians(270.00))
+        // drive.pose = Pose2d(36.00, 60.00, Math.toRadians(270.00))
 
         while (opModeIsActive()) {
 
