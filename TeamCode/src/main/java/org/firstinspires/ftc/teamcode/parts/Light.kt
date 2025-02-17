@@ -8,13 +8,13 @@ class Light(val servo: Servo) {
         set(value) {
             field = value
 
-            servo.position = if (on) scaleColors(color) else 0.0
+            servo.position = if (on) color else 0.0
         }
 
     var color: Double = 0.0
         set(value) {
             field = value
-            servo.position = scaleColors(color)
+            servo.position = color
         }
 
     var blinkInterval: Double = 0.0
