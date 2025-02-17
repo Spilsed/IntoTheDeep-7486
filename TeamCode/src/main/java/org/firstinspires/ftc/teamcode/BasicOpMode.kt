@@ -29,6 +29,8 @@ class BasicOpMode : LinearOpMode() {
 
             // Dashboard update
             r.dashboardTelemetry.update()
+            // Robot update
+            r.update()
         }
     }
 
