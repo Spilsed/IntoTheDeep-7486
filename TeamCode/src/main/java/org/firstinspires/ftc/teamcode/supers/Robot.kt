@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
+import org.firstinspires.ftc.teamcode.parts.Light
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
@@ -33,6 +34,10 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     var linearActuator: ContLinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
+
+    // Lights
+    var frontLight: Light
+    var backLight: Light
 
     // Misc
     var octoQuad: OctoQuad
@@ -83,7 +88,15 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
         lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
 
+        frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
+        backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
+
         drive = MecanumDrive(hardwareMap, startPose)
+    }
+
+    fun update() {
+        frontLight.update()
+        backLight.update()
     }
 }
 
