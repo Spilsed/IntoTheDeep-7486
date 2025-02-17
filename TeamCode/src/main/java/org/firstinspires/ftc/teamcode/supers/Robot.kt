@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.DcMotorOctoEncoder
 import org.firstinspires.ftc.teamcode.parts.Light
+import org.firstinspires.ftc.teamcode.parts.LightArray
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
@@ -41,6 +42,7 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     // Lights
     var frontLight: Light
     var backLight: Light
+    var allLights: LightArray
 
     // Misc
     var octoQuad: OctoQuad
@@ -110,6 +112,7 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
 
         frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
+        allLights = LightArray(mutableListOf(frontLight, backLight))
 
         drive = MecanumDrive(hardwareMap, startPose)
     }
