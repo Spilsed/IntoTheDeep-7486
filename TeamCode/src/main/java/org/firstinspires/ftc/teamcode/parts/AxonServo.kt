@@ -25,6 +25,7 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
             field = clampf(value, 0.0, 1.0)
         }
 
+    // Set the power so it moves towards the target position
     fun updatePosition() {
         if (abs(position - targetPosition) >= 0.01) {
             servo.power = sign(targetPosition - position) * 0.5
