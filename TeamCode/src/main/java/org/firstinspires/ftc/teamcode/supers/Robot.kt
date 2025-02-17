@@ -114,6 +114,10 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
         allLights = LightArray(mutableListOf(frontLight, backLight))
 
+        // Initialize lights
+        allLights.on = true
+        allLights.color = 0.666
+
         drive = MecanumDrive(hardwareMap, startPose)
     }
 
