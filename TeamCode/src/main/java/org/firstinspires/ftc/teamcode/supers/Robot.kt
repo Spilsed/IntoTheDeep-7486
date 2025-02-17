@@ -84,9 +84,29 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         hand = hardwareMap.get(CRServo::class.java, "hand")
         wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
         // wrist = Wrist(AxonCRServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
-        linearActuator = ContLinearSlide(hardwareMap.get(DcMotor::class.java, "la"), 537.7, 5.2)
-        rotationalArm = RotationalArm(hardwareMap.get(DcMotor::class.java, "arm1"), hardwareMap.get(DcMotor::class.java, "arm2"), -10000, 6335)
-        lift = Lift(hardwareMap.get(DcMotor::class.java, "liftm"), hardwareMap.get(CRServo::class.java, "lifts"), 537.7, 7.33, 100, 0, 0.5, 0.0)
+        linearActuator = ContLinearSlide(DcMotorOctoEncoder(
+            hardwareMap.get(DcMotor::class.java, "la"), octoQuad, 2),
+            537.7,
+            5.2
+        )
+
+        rotationalArm = RotationalArm(
+            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
+            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
+            -10000,
+            6335
+        )
+
+        lift = Lift(
+            hardwareMap.get(DcMotor::class.java, "liftm"),
+            hardwareMap.get(CRServo::class.java, "lifts"),
+            537.7,
+            7.33,
+            100,
+            0,
+            0.5,
+            0.0
+        )
 
         frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
