@@ -1,17 +1,20 @@
 package org.firstinspires.ftc.teamcode.supers
 
 import com.acmerobotics.dashboard.FtcDashboard
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket
+import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
-import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
+import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
+import org.firstinspires.ftc.teamcode.parts.DcMotorOctoEncoder
 import org.firstinspires.ftc.teamcode.parts.Light
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
@@ -75,9 +78,6 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         lb.direction = DcMotorSimple.Direction.REVERSE
 
         octoQuad = hardwareMap.get(OctoQuad::class.java, "octo")
-        octoQuad.setSingleEncoderDirection(0, OctoQuadBase.EncoderDirection.FORWARD)
-        octoQuad.setSingleEncoderDirection(1, OctoQuadBase.EncoderDirection.REVERSE)
-        octoQuad.setSingleEncoderDirection(2, OctoQuadBase.EncoderDirection.FORWARD)
         octoQuad.saveParametersToFlash()
 
         // Initialize the robot parts
@@ -117,6 +117,39 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     fun update() {
         frontLight.update()
         backLight.update()
+    }
+
+    // Actions
+    // Arm actions
+    class ArmToHome : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
+
+    class armAndWristToPickup : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
+
+    class ArmToSecondBar : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
+
+    // Wrist actions
+    class wristToHome : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
+
+    class wristToSecondBar : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            TODO("Not yet implemented")
+        }
     }
 }
 
