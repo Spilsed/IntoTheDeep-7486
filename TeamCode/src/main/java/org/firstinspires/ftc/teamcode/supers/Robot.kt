@@ -154,6 +154,42 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
             TODO("Not yet implemented")
         }
     }
+
+    // Light actions
+    inner class turnOffLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.on = false
+            return true
+        }
+    }
+
+    inner class turnOnLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.on = true
+            return true
+        }
+    }
+
+    inner class goodLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.5
+            return true
+        }
+    }
+
+    inner class doingLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.722
+            return true
+        }
+    }
+
+    inner class badLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.279
+            return true
+        }
+    }
 }
 
 // noooow ieeee knowl dendude nahenune nAaah melatha
