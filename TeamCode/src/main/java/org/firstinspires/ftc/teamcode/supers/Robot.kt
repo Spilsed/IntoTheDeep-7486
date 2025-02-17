@@ -121,32 +121,32 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
 
     // Actions
     // Arm actions
-    class ArmToHome : Action {
+    inner class ArmToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    class armAndWristToPickup : Action {
+    inner class armAndWristToPickup : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    class ArmToSecondBar : Action {
+    inner class ArmToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
     // Wrist actions
-    class wristToHome : Action {
+    inner class wristToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    class wristToSecondBar : Action {
+    inner class wristToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
