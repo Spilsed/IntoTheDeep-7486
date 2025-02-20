@@ -73,7 +73,6 @@ class BasicOpMode : LinearOpMode() {
 
         r.dashboardTelemetry.addData("Hand power", r.hand.power)
         r.dashboardTelemetry.addData("Right Bumper", gamepad2.right_bumper)
-        r.dashboardTelemetry.addData("Left Bumper", gamepad2.left_bumper)
 
         // Wrist
         if (gamepad2.dpad_up) {
