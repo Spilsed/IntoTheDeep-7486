@@ -52,7 +52,7 @@ class BasicOpMode : LinearOpMode() {
             r.linearActuator.motor.power = 0.4
         } else {
             r.linearActuator.motor.power = 0.0
-        } // nitinsoni81@gmail.com, anshswarnakar9@gmail.com;
+        }
 
         // Rotational Arm
         r.dashboardTelemetry.addData("ROT", r.rotationalArm.motor1.currentPosition)
