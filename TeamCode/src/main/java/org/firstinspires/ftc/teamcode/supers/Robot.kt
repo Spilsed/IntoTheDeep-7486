@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.DigitalChannel
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -37,6 +38,9 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     var linearActuator: ContLinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
+
+    // Sensors
+    var armHomingTouch: DigitalChannel
 
     // Lights
     var frontLight: Light
@@ -93,7 +97,7 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         rotationalArm = RotationalArm(
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
-            -10000,
+            -3,
             6335
         )
 
@@ -108,6 +112,9 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
             0.0
         )
 
+        armHomingTouch = hardwareMap.get(DigitalChannel::class.java, "armtouch")
+        armHomingTouch.setMode(DigitalChannel.Mode.INPUT)
+
         frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
 
@@ -117,6 +124,11 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     fun update() {
         frontLight.update()
         backLight.update()
+
+        // If the arm touches the sensor set that as the minimum
+        if (armHomingTouch.state) {
+            rotationalArm.min = rotationalArm.motor1.currentPosition
+        }
 
         rotationalArm.update()
     }
