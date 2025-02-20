@@ -59,7 +59,6 @@ class BasicOpMode : LinearOpMode() {
         // Rotational Arm
         r.dashboardTelemetry.addData("ROT", r.rotationalArm.motor1.currentPosition)
         r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
-        r.rotationalArm.update()
 
         // Hand
         // in

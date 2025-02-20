@@ -117,6 +117,8 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     fun update() {
         frontLight.update()
         backLight.update()
+
+        rotationalArm.update()
     }
 
     // Actions
