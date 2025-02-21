@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode.parts
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.util.clampf
 import org.firstinspires.ftc.teamcode.util.clampi
+import kotlin.math.abs
+import kotlin.math.log
+import kotlin.math.min
+import kotlin.math.sign
 
-class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val max: Int, up: Boolean = false) {
+class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val max: Int, up: Boolean = true) {
     val motors: Array<DcMotor> = arrayOf(motor1, motor2)
 
     val zeroModifier: Int
@@ -20,26 +25,27 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
 
     var power: Double = 0.0
         set(value) {
-            field = if (motor1.currentPosition >= max && power * zeroModifier < 0.0) {
-                0.0
-            } else if (motor1.currentPosition <= min && power * zeroModifier > 0.0) {
-                0.0
-            } else {
-                value
-            }
+            field = limitPower(value, motor1.currentPosition)
 
             for (motor in motors) {
                 motor.power = field
             }
         }
 
-    fun update() {
-        if (motor1.currentPosition >= max && power * zeroModifier > 0.0) {
-            power = 0.0
-        }
+    fun limitPower(power: Double, position: Int): Double {
+        return if (position >= max && power * zeroModifier <= 0.0) {
+            0.0
+        } else if (position <= min && power * zeroModifier >= 0.0) {
+            0.0
+        } else {
+            power
 
-        if (motor1.currentPosition <= min && power * zeroModifier < 0.0) {
-            power = 0.0
+            // As value approaches a maximum decrease the maximum speed of the motor
+            // clampf(abs(power), 0.1, log((min(abs(position - min), abs(position - max)).toDouble() + 50) / 50, 10.0)) * sign(power)
         }
+    }
+
+    fun update() {
+        power = limitPower(power, motor1.currentPosition)
     }
 }
