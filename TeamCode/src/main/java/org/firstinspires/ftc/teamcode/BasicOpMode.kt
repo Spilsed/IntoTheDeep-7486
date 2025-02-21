@@ -57,8 +57,12 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("LAct", r.linearActuator.motor.currentPosition)
 
         // Rotational Arm
-        r.dashboardTelemetry.addData("ROT", r.rotationalArm.motor1.currentPosition)
+        r.dashboardTelemetry.addData("Homing", r.armHomingTouch.state)
+        r.dashboardTelemetry.addData("ROT-Pos", r.rotationalArm.motor1.currentPosition)
         r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
+        r.dashboardTelemetry.addData("ROT-Pow", r.rotationalArm.power)
+        r.dashboardTelemetry.addData("ROT-Min", r.rotationalArm.min)
+        r.dashboardTelemetry.addData("ROT-MinStop", r.rotationalArm.motor1.currentPosition <= r.rotationalArm.min && r.rotationalArm.power * r.rotationalArm.zeroModifier < 0.0)
 
         // Hand
         // in
