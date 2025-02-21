@@ -15,11 +15,16 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
     val zeroModifier: Int
 
     init {
-        motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        motor1.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-
-        motor2.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motor1.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
         motor2.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+
+        if (auto) {
+            motor1.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motor2.mode = DcMotor.RunMode.RUN_TO_POSITION
+        } else {
+            motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            motor2.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        }
 
         zeroModifier = if (up) { 1 } else { -1 }
     }
