@@ -4,53 +4,58 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
 class MotorArray(var motors: ArrayList<DcMotor>) {
-    fun setZeroPowerBehavior(zeroPowerBehavior: DcMotor.ZeroPowerBehavior?) {
-        for (motor in motors) {
-            motor.zeroPowerBehavior = zeroPowerBehavior
+    var zeroPowerBehavior: DcMotor.ZeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+        set(value) {
+            field = value
+            for (motor in motors) {
+                motor.zeroPowerBehavior = zeroPowerBehavior
+            }
         }
-    }
-
-    fun getZeroPowerBehavior(): DcMotor.ZeroPowerBehavior? {
-        return motors[0].zeroPowerBehavior
-    }
-
-    fun setTargetPosition(position: Int) {
-        for (motor in motors) {
-            motor.targetPosition = position
+        get() {
+            return motors[0].zeroPowerBehavior
         }
-    }
 
-    fun getTargetPosition(): Int {
-        return motors[0].targetPosition
-    }
-
-    fun setMode(mode: DcMotor.RunMode?) {
-        for (motor in motors) {
-            motor.mode = mode
+    var targetPosition: Int = 0
+        set(value) {
+            field = value
+            for (motor in motors) {
+                motor.targetPosition = targetPosition
+            }
         }
-    }
-
-    fun getMode(): DcMotor.RunMode? {
-        return motors[0].mode
-    }
-
-    fun setDirection(direction: DcMotorSimple.Direction?) {
-        for (motor in motors) {
-            motor.direction = direction
+        get() {
+            return motors[0].targetPosition
         }
-    }
 
-    fun getDirection(): DcMotorSimple.Direction? {
-        return motors[0].direction
-    }
-
-    fun setPower(power: Double) {
-        for (motor in motors) {
-            motor.power = power
+    var mode: DcMotor.RunMode = motors[0].mode
+        set(value) {
+            field = value
+            for (motor in motors) {
+                motor.mode = mode
+            }
         }
-    }
+        get() {
+            return motors[0].mode
+        }
 
-    fun getPower(): Double {
-        return motors[0].power
-    }
+    var direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
+        set(value) {
+            field = value
+            for (motor in motors) {
+                motor.direction = direction
+            }
+        }
+        get() {
+            return motors[0].direction
+        }
+
+    var power: Double = 0.0
+        set(value) {
+            field = value
+            for (motor in motors) {
+                motor.power = power
+            }
+        }
+        get() {
+            return motors[0].power
+        }
 }
