@@ -97,9 +97,11 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         rotationalArm = RotationalArm(
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
-            -3,
+            1000,
             6335
         )
+        rotationalArm.motor1.direction = DcMotorSimple.Direction.REVERSE
+        rotationalArm.motor2.direction = DcMotorSimple.Direction.REVERSE
 
         lift = Lift(
             hardwareMap.get(DcMotor::class.java, "liftm"),
@@ -113,7 +115,7 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         )
 
         armHomingTouch = hardwareMap.get(DigitalChannel::class.java, "armtouch")
-        armHomingTouch.setMode(DigitalChannel.Mode.INPUT)
+        armHomingTouch.mode = DigitalChannel.Mode.INPUT
 
         frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
@@ -126,9 +128,9 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         backLight.update()
 
         // If the arm touches the sensor set that as the minimum
-        if (armHomingTouch.state) {
-            rotationalArm.min = rotationalArm.motor1.currentPosition
-        }
+//        if (armHomingTouch.state) {
+//            rotationalArm.min = rotationalArm.motor1.currentPosition
+//        }
 
         rotationalArm.update()
     }
