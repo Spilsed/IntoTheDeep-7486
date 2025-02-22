@@ -12,7 +12,7 @@ class SpinSquareTest : LinearOpMode() {
     lateinit var r: Robot
 
     override fun runOpMode() {
-        r = Robot(this, Pose2d(Vector2d(0.0, 0.0), 0.0))
+        r = Robot(this, startPose = Pose2d(Vector2d(0.0, 0.0), 0.0))
 
         waitForStart()
 
