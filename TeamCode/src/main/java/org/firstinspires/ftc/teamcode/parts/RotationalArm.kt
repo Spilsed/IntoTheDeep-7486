@@ -9,10 +9,12 @@ import kotlin.math.log
 import kotlin.math.min
 import kotlin.math.sign
 
-class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val max: Int, auto: Boolean, up: Boolean = true) {
+class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val max: Int, auto: Boolean, private val acceptableRange: Int = 20, up: Boolean = false) {
     val motors = MotorArray(arrayListOf(motor1, motor2))
 
     val zeroModifier: Int
+
+    var limited: Boolean = true
 
     init {
         motor1.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
@@ -31,12 +33,11 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
 
     var power: Double = 0.0
         set(value) {
-            field = limitPower(value, motor1.currentPosition)
-
+            field = if (limited) limitPower(value, motor1.currentPosition) else value
             motors.power = field
         }
 
-    fun limitPower(power: Double, position: Int): Double {
+    private fun limitPower(power: Double, position: Int): Double {
         return if (position >= max && power * zeroModifier <= 0.0) {
             0.0
         } else if (position <= min && power * zeroModifier >= 0.0) {
@@ -51,5 +52,9 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
 
     fun update() {
         power = limitPower(power, motor1.currentPosition)
+
+        if (isAtTarget) {
+            motors.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        }
     }
 }
