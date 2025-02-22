@@ -147,7 +147,8 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     // Arm actions
     inner class ArmToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
-            TODO("Not yet implemented")
+            rotationalArm.targetPosition = 0
+            return !rotationalArm.isAtTarget
         }
     }
 
@@ -159,7 +160,8 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
 
     inner class ArmToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
-            TODO("Not yet implemented")
+            rotationalArm.targetPosition = -1700
+            return !rotationalArm.isAtTarget
         }
     }
 
