@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
-class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
+class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     // Declare all the hardware
     var lf: DcMotor
     var lb: DcMotor
@@ -100,7 +100,8 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
             DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
             1000,
-            6335
+            6335,
+            auto
         )
         rotationalArm.motor1.direction = DcMotorSimple.Direction.REVERSE
         rotationalArm.motor2.direction = DcMotorSimple.Direction.REVERSE
