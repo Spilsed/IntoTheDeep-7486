@@ -180,35 +180,35 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     inner class TurnOffLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.on = false
-            return true
+            return false
         }
     }
 
     inner class TurnOnLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
-            allLights.on = true
-            return true
+            allLights.on = false
+            return false
         }
     }
 
     inner class GoodLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.5
-            return true
+            return false
         }
     }
 
     inner class WorkingLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.722
-            return true
+            return false
         }
     }
 
     inner class BadLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.279
-            return true
+            return false
         }
     }
 }
