@@ -52,12 +52,17 @@ class BasicOpMode : LinearOpMode() {
             r.linearActuator.motor.power = 0.4
         } else {
             r.linearActuator.motor.power = 0.0
-        } // nitinsoni81@gmail.com, anshswarnakar9@gmail.com;
+        }
+
+        r.dashboardTelemetry.addData("LAct", r.linearActuator.motor.currentPosition)
 
         // Rotational Arm
-        r.dashboardTelemetry.addData("ROT", r.rotationalArm.motor1.currentPosition)
+        r.dashboardTelemetry.addData("Homing", r.armHomingTouch.state)
+        r.dashboardTelemetry.addData("ROT-Pos", r.rotationalArm.motor1.currentPosition)
         r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
-        r.rotationalArm.update()
+        r.dashboardTelemetry.addData("ROT-Pow", r.rotationalArm.power)
+        r.dashboardTelemetry.addData("ROT-Min", r.rotationalArm.min)
+        r.dashboardTelemetry.addData("ROT-MinStop", r.rotationalArm.motor1.currentPosition <= r.rotationalArm.min && r.rotationalArm.power * r.rotationalArm.zeroModifier < 0.0)
 
         // Hand
         // in
@@ -72,7 +77,6 @@ class BasicOpMode : LinearOpMode() {
 
         r.dashboardTelemetry.addData("Hand power", r.hand.power)
         r.dashboardTelemetry.addData("Right Bumper", gamepad2.right_bumper)
-        r.dashboardTelemetry.addData("Left Bumper", gamepad2.left_bumper)
 
         // Wrist
         if (gamepad2.dpad_up) {
