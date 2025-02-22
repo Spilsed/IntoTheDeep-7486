@@ -21,8 +21,7 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
         motor2.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
 
         if (auto) {
-            motor1.mode = DcMotor.RunMode.RUN_TO_POSITION
-            motor2.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motors.targetPosition = motor1.currentPosition
         } else {
             motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
             motor2.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
