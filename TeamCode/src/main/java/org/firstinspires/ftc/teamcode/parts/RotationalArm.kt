@@ -2,12 +2,8 @@ package org.firstinspires.ftc.teamcode.parts
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.util.MotorArray
-import org.firstinspires.ftc.teamcode.util.clampf
 import org.firstinspires.ftc.teamcode.util.clampi
 import kotlin.math.abs
-import kotlin.math.log
-import kotlin.math.min
-import kotlin.math.sign
 
 class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val max: Int, auto: Boolean, private val acceptableRange: Int = 20, up: Boolean = false) {
     val motors = MotorArray(arrayListOf(motor1, motor2))
