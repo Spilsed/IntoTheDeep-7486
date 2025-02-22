@@ -31,6 +31,20 @@ class RotationalArm(val motor1: DcMotor, val motor2: DcMotor, var min: Int, val 
         zeroModifier = if (up) { 1 } else { -1 }
     }
 
+    var targetPosition: Int = motor1.currentPosition
+        set(value) {
+            field = clampi(value, min, max)
+            motors.targetPosition = field
+            motors.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motors.power = 0.5
+        }
+
+    val currentPosition: Int
+        get() = motor1.currentPosition
+
+    val isAtTarget: Boolean
+        get() = abs(currentPosition - targetPosition) < acceptableRange
+
     var power: Double = 0.0
         set(value) {
             field = if (limited) limitPower(value, motor1.currentPosition) else value
