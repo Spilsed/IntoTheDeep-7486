@@ -151,7 +151,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         }
     }
 
-    inner class armAndWristToPickup : Action {
+    inner class ArmAndWristToPickup : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
@@ -164,48 +164,48 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     }
 
     // Wrist actions
-    inner class wristToHome : Action {
+    inner class WristToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    inner class wristToSecondBar : Action {
+    inner class WristToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
     // Light actions
-    inner class turnOffLights : Action {
+    inner class TurnOffLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.on = false
             return true
         }
     }
 
-    inner class turnOnLights : Action {
+    inner class TurnOnLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.on = true
             return true
         }
     }
 
-    inner class goodLights : Action {
+    inner class GoodLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.5
             return true
         }
     }
 
-    inner class doingLights : Action {
+    inner class WorkingLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.722
             return true
         }
     }
 
-    inner class badLights : Action {
+    inner class BadLights : Action {
         override fun run(p: TelemetryPacket): Boolean {
             allLights.color = 0.279
             return true
