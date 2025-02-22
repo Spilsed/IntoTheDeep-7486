@@ -5,7 +5,7 @@ import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 
-class DcMotorOctoEncoder(val motor: DcMotor, val octoQuad: OctoQuad, val octoId: Int) : DcMotor by motor {
+class DcMotorOctoEncoder(val motor: DcMotor, private val octoQuad: OctoQuad, private val octoId: Int) : DcMotor by motor {
     override fun getCurrentPosition(): Int {
         return octoQuad.readSinglePosition(octoId)
     }
@@ -17,6 +17,14 @@ class DcMotorOctoEncoder(val motor: DcMotor, val octoQuad: OctoQuad, val octoId:
             octoQuad.setSingleEncoderDirection(octoId, OctoQuadBase.EncoderDirection.FORWARD)
         } else {
             octoQuad.setSingleEncoderDirection(octoId, OctoQuadBase.EncoderDirection.REVERSE)
+        }
+    }
+
+    override fun setMode(mode: DcMotor.RunMode) {
+        if (mode == DcMotor.RunMode.STOP_AND_RESET_ENCODER) {
+            octoQuad.resetSinglePosition(octoId)
+        } else {
+            motor.mode = mode
         }
     }
 }
