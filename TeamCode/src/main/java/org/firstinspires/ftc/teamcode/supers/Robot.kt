@@ -126,7 +126,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
 
         // Initialize lights
         allLights.on = true
-        allLights.color = 0.666
+        allLights.color = 0.640
 
         drive = MecanumDrive(hardwareMap, startPose)
     }
