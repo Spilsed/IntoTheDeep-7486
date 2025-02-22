@@ -97,10 +97,10 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         )
 
         rotationalArm = RotationalArm(
-            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
-            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
-            1000,
-            6335,
+            hardwareMap.get(DcMotor::class.java, "arm1"),
+            hardwareMap.get(DcMotor::class.java, "arm2"),
+            -4000,
+            0,
             auto
         )
         rotationalArm.motor1.direction = DcMotorSimple.Direction.REVERSE
