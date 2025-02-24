@@ -8,7 +8,7 @@ class MotorArray(var motors: ArrayList<DcMotor>) {
         set(value) {
             field = value
             for (motor in motors) {
-                motor.zeroPowerBehavior = zeroPowerBehavior
+                motor.zeroPowerBehavior = field
             }
         }
         get() {
@@ -19,7 +19,7 @@ class MotorArray(var motors: ArrayList<DcMotor>) {
         set(value) {
             field = value
             for (motor in motors) {
-                motor.targetPosition = targetPosition
+                motor.targetPosition = field
             }
         }
         get() {
@@ -30,7 +30,7 @@ class MotorArray(var motors: ArrayList<DcMotor>) {
         set(value) {
             field = value
             for (motor in motors) {
-                motor.mode = mode
+                motor.mode = field
             }
         }
         get() {
@@ -41,7 +41,7 @@ class MotorArray(var motors: ArrayList<DcMotor>) {
         set(value) {
             field = value
             for (motor in motors) {
-                motor.direction = direction
+                motor.direction = field
             }
         }
         get() {
@@ -52,7 +52,7 @@ class MotorArray(var motors: ArrayList<DcMotor>) {
         set(value) {
             field = value
             for (motor in motors) {
-                motor.power = power
+                motor.power = field
             }
         }
         get() {

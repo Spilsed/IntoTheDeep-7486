@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.parts.Lift
 import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.DcMotorOctoEncoder
 import org.firstinspires.ftc.teamcode.parts.Light
+import org.firstinspires.ftc.teamcode.parts.LightArray
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
@@ -24,7 +25,7 @@ import org.firstinspires.ftc.teamcode.util.GamepadState
 
 
 // Kotlin is a stupid language made by stupid people, used by stupid people and i hate it and it's not as compatible with java as the feds want you to think.
-class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
+class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     // Declare all the hardware
     var lf: DcMotor
     var lb: DcMotor
@@ -45,6 +46,7 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
     // Lights
     var frontLight: Light
     var backLight: Light
+    var allLights: LightArray
 
     // Misc
     var octoQuad: OctoQuad
@@ -95,10 +97,11 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
         )
 
         rotationalArm = RotationalArm(
-            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm1"), octoQuad, 0),
-            DcMotorOctoEncoder(hardwareMap.get(DcMotor::class.java, "arm2"), octoQuad, 1),
-            1000,
-            6335
+            hardwareMap.get(DcMotor::class.java, "arm1"),
+            hardwareMap.get(DcMotor::class.java, "arm2"),
+            -4000,
+            0,
+            auto
         )
         rotationalArm.motor1.direction = DcMotorSimple.Direction.REVERSE
         rotationalArm.motor2.direction = DcMotorSimple.Direction.REVERSE
@@ -119,6 +122,11 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
 
         frontLight = Light(hardwareMap.get(Servo::class.java, "frontlight"))
         backLight = Light(hardwareMap.get(Servo::class.java, "backlight"))
+        allLights = LightArray(mutableListOf(frontLight, backLight))
+
+        // Initialize lights
+        allLights.on = true
+        allLights.color = 0.640
 
         drive = MecanumDrive(hardwareMap, startPose)
     }
@@ -137,34 +145,72 @@ class Robot(opMode: OpMode, val startPose: Pose2d = Pose2d(0.0, 0.0, 0.0)) {
 
     // Actions
     // Arm actions
-    class ArmToHome : Action {
+    inner class ArmToHome : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            rotationalArm.targetPosition = 0
+            return !rotationalArm.isAtTarget
+        }
+    }
+
+    inner class ArmAndWristToPickup : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    class armAndWristToPickup : Action {
+    inner class ArmToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
-            TODO("Not yet implemented")
-        }
-    }
-
-    class ArmToSecondBar : Action {
-        override fun run(p: TelemetryPacket): Boolean {
-            TODO("Not yet implemented")
+            rotationalArm.targetPosition = -1700
+            return !rotationalArm.isAtTarget
         }
     }
 
     // Wrist actions
-    class wristToHome : Action {
+    inner class WristToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
         }
     }
 
-    class wristToSecondBar : Action {
+    inner class WristToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
+        }
+    }
+
+    // Light actions
+    inner class TurnOffLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.on = false
+            return false
+        }
+    }
+
+    inner class TurnOnLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.on = false
+            return false
+        }
+    }
+
+    inner class GoodLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.5
+            return false
+        }
+    }
+
+    inner class WorkingLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.722
+            return false
+        }
+    }
+
+    inner class BadLights : Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            allLights.color = 0.279
+            return false
         }
     }
 }

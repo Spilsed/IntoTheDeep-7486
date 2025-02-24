@@ -57,14 +57,13 @@ class LiftTest: LinearOpMode() {
     }
 }
 */
-package org.firstinspires.ftc.teamcode.testing
+package org.firstinspires.ftc.teamcode.testing.parts
 
 
 import com. qualcomm. robotcore. eventloop. opmode. TeleOp
 import com. qualcomm. robotcore. eventloop. opmode. LinearOpMode
 import com.qualcomm.robotcore.hardware.CRServo
 import org. firstinspires. ftc. teamcode. supers. Robot
-import com. qualcomm. robotcore. eventloop. opmode. OpMode
 
 @TeleOp(name = "Lift Test")
 class LiftTest: LinearOpMode() {

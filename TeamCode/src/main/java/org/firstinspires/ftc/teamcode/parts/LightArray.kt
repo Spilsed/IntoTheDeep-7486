@@ -1,20 +1,24 @@
 package org.firstinspires.ftc.teamcode.parts
 
-import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.util.clampf
 
-class Light(val servo: Servo) {
+class LightArray(val lights: MutableList<Light>) {
     var on: Boolean = false
         set(value) {
             field = value
 
-            servo.position = if (on) color else 0.0
+            for (light in lights) {
+                light.on = on
+            }
         }
 
     var color: Double = 0.0
         set(value) {
             field = value
-            servo.position = color
+
+            for (light in lights) {
+                light.color = color
+            }
         }
 
     var blinkInterval: Double = 0.0
@@ -30,7 +34,9 @@ class Light(val servo: Servo) {
     // Needs to be run for blinking
     fun update() {
         if (System.currentTimeMillis() <= lastBlink + (blinkInterval/2 * 1000).toInt())  {
-            on = !on
+            for (light in lights) {
+                light.on = on
+            }
         }
     }
 }
