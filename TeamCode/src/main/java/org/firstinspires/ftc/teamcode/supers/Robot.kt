@@ -57,8 +57,8 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     var gamepadState2: GamepadState = GamepadState()
 
     // FTC Dashboard
-    var dashboard: FtcDashboard? = FtcDashboard.getInstance()
-    var dashboardTelemetry: Telemetry = dashboard!!.telemetry
+    var dashboard: FtcDashboard = FtcDashboard.getInstance()
+    var dashboardTelemetry: Telemetry = dashboard.telemetry
 
     // Set opMode and hardwareMap
     init {
