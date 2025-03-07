@@ -94,13 +94,7 @@ class BasicOpMode : LinearOpMode() {
             r.wrist.turn(0.0)
         }
 
-        if (gamepad2.dpad_left) {
-            r.wrist.twist(0.5)
-        } else if (gamepad2.dpad_right) {
-            r.wrist.twist(-0.5)
-        } else {
-            r.wrist.twist(0.0)
-        }
+
 
         r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         r.lift.motor.power = gamepad2.right_stick_y.toDouble()
