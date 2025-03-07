@@ -60,7 +60,7 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("Homing", r.armHomingTouch.state)
         r.dashboardTelemetry.addData("ROT-Pos", r.rotationalArm.motor1.currentPosition)
         r.dashboardTelemetry.addData("ROT-Pos2", r.rotationalArm.motor2.currentPosition)
-        r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
+        r.rotationalArm.extend(gamepad2.left_stick_y.toDouble())
         r.dashboardTelemetry.addData("ROT-Pow", r.rotationalArm.power)
         r.dashboardTelemetry.addData("ROT-MPow", r.rotationalArm.motor1.power)
         r.dashboardTelemetry.addData("ROT-Mode", r.rotationalArm.motor1.mode)
