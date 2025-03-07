@@ -87,7 +87,7 @@ class BasicOpMode : LinearOpMode() {
 
         // Wrist
         if (gamepad2.dpad_up) {
-            r.wrist.turn(0.5)
+            r.wrist.turn(0.4)
         } else if (gamepad2.dpad_down) {
             r.wrist.turn(-0.5)
         } else {
