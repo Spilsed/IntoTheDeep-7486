@@ -4,13 +4,17 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
+import com.qualcomm.hardware.bosch.BNO055IMU
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
+import com.qualcomm.hardware.limelightvision.Limelight3A
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.CRServo
+import com.qualcomm.robotcore.hardware.ColorSensor
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.DigitalChannel
+import com.qualcomm.robotcore.hardware.DistanceSensor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -43,16 +47,17 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
 
     // Sensors
     var armHomingTouch: DigitalChannel
+    var imu: BNO055IMU
     var limelight: Limelight3A
-    var distanceSensorRF : DistanceSensor
-    var distanceSensorLF : DistanceSensor
-    var distanceSensorLB : DistanceSensor
-    var distanceSensorLL : DistanceSensor
-    var distanceSensorLR : DistanceSensor
-    var distanceSensorRB : DistanceSensor
-    var distanceSensorRL : DistanceSensor
-    var distanceSensorRR : DistanceSensor
-    var colorSensor : ColorSensor
+    var distanceSensorRF: DistanceSensor
+    var distanceSensorLF: DistanceSensor
+    var distanceSensorLB: DistanceSensor
+    var distanceSensorLL: DistanceSensor
+    var distanceSensorLR: DistanceSensor
+    var distanceSensorRB: DistanceSensor
+    var distanceSensorRL: DistanceSensor
+    var distanceSensorRR: DistanceSensor
+    var colorSensor: ColorSensor
 
     // Lights
     var frontLight: Light
@@ -142,6 +147,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         drive = MecanumDrive(hardwareMap, startPose)
 
         imu = hardwareMap.get(BNO055IMU::class.java, "imu")
+        limelight = hardwareMap.get(Limelight3A::class.java, "limelight")
         distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "r-distance")
         distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "l-distance")
         distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
