@@ -36,7 +36,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     // Robot Parts
     var hand: CRServo
     var wrist: ManualWristCont
-    var linearActuator: ContLinearSlide
+    var linearActuator: LinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
 
@@ -67,8 +67,8 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     var gamepadState2: GamepadState = GamepadState()
 
     // FTC Dashboard
-    var dashboard: FtcDashboard? = FtcDashboard.getInstance()
-    var dashboardTelemetry: Telemetry = dashboard!!.telemetry
+    var dashboard: FtcDashboard = FtcDashboard.getInstance()
+    var dashboardTelemetry: Telemetry = dashboard.telemetry
 
     // Set opMode and hardwareMap
     init {
@@ -100,8 +100,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         hand = hardwareMap.get(CRServo::class.java, "hand")
         wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
         // wrist = Wrist(AxonCRServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
-        linearActuator = ContLinearSlide(DcMotorOctoEncoder(
-            hardwareMap.get(DcMotor::class.java, "la"), octoQuad, 2),
+        linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"),
             537.7,
             5.2
         )

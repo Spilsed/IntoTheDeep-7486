@@ -60,7 +60,7 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("Homing", r.armHomingTouch.state)
         r.dashboardTelemetry.addData("ROT-Pos", r.rotationalArm.motor1.currentPosition)
         r.dashboardTelemetry.addData("ROT-Pos2", r.rotationalArm.motor2.currentPosition)
-        r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
+    //    r.rotationalArm.extend(gamepad2.left_stick_y.toDouble())
         r.dashboardTelemetry.addData("ROT-Pow", r.rotationalArm.power)
         r.dashboardTelemetry.addData("ROT-MPow", r.rotationalArm.motor1.power)
         r.dashboardTelemetry.addData("ROT-Mode", r.rotationalArm.motor1.mode)
@@ -85,14 +85,6 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("Hand power", r.hand.power)
         r.dashboardTelemetry.addData("Right Bumper", gamepad2.right_bumper)
 
-        // Wrist
-        if (gamepad2.dpad_up) {
-            r.wrist.turn(0.4)
-        } else if (gamepad2.dpad_down) {
-            r.wrist.turn(-0.4)
-        } else {
-            r.wrist.turn(0.0)
-        }
 
         if (gamepad2.dpad_left) {
             r.wrist.twist(0.5)
