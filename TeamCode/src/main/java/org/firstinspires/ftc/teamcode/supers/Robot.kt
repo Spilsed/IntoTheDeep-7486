@@ -8,6 +8,7 @@ import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.DigitalChannel
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -36,7 +37,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     // Robot Parts
     var hand: CRServo
     var wrist: ManualWristCont
-    var linearActuator: LinearSlide
+    var linearActuator: ContLinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
 
@@ -90,7 +91,8 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         hand = hardwareMap.get(CRServo::class.java, "hand")
         wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
         // wrist = Wrist(AxonCRServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
-        linearActuator = LinearSlide(hardwareMap.get(DcMotor::class.java, "la"),
+        linearActuator = ContLinearSlide(DcMotorOctoEncoder(
+            hardwareMap.get(DcMotor::class.java, "la") as DcMotorEx, octoQuad, 2),
             537.7,
             5.2
         )
