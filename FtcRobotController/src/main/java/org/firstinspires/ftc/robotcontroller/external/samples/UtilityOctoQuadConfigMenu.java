@@ -52,7 +52,6 @@ import java.util.Stack;
  * See the sensor's product page: https://www.tindie.com/products/digitalchickenlabs/octoquad-8ch-quadrature-pulse-width-decoder/
  */
 @TeleOp(name = "OctoQuad Configuration Tool", group="OctoQuad")
-@Disabled
 public class UtilityOctoQuadConfigMenu extends LinearOpMode
 {
     TelemetryMenu.MenuElement rootMenu = new TelemetryMenu.MenuElement("OctoQuad Config Menu", true);
