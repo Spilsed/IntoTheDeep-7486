@@ -13,17 +13,27 @@ import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.acmerobotics.roadrunner.ftc.PositionVelocityPair;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.parts.OctoMotor;
 import org.firstinspires.ftc.teamcode.roadRunner.messages.ThreeDeadWheelInputsMessage;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
+//    public static class Params {
+//        public double par0YTicks = -1682.5; //-1425.51963583; // y position of the first parallel encoder (in tick units)
+//        public double par1YTicks = 1682.5; //1425.51963583; // y position of the second parallel encoder (in tick units)
+//        public double perpXTicks = -2842.5540524; // x position of the perpendicular encoder (in tick units)
+//    }
+
     public static class Params {
-        public double par0YTicks = -1682.5; //-1425.51963583; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 1682.5; //1425.51963583; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = -2842.5540524; // x position of the perpendicular encoder (in tick units)
+        public double par0YTicks = -3110.5; // y position of the first parallel encoder (in tick units)
+        public double par1YTicks = 3110.5; // y position of the second parallel encoder (in tick units)
+        public double perpXTicks = -5.66929 / 0.00198; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -40,12 +50,26 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
         // TODO: make sure your config has **motors** with these names (or change them)
         //   the encoders should be plugged into the slot matching the named motor
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        par0 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "arm1")));
-        par1 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "arm2")));
-        perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "la")));
+
+        OctoQuad octoQuad = hardwareMap.get(OctoQuad.class, "octo");
+//        octoQuad.setSingleEncoderDirection(0, OctoQuadBase.EncoderDirection.REVERSE);
+//        octoQuad.setSingleEncoderDirection(1, OctoQuadBase.EncoderDirection.REVERSE);
+//        octoQuad.setSingleEncoderDirection(2,  OctoQuadBase.EncoderDirection.FORWARD);
+//        octoQuad.saveParametersToFlash();
+
+         par0 = new OverflowEncoder(new RawEncoder(new OctoMotor(octoQuad, 0)));
+         par1 = new OverflowEncoder(new RawEncoder(new OctoMotor(octoQuad, 1)));
+         perp = new OverflowEncoder(new RawEncoder(new OctoMotor(octoQuad, 2)));
+
+//        par0 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "lf")));
+//        par1 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "rf")));
+//        perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "lb")));
 
         // TODO: reverse encoder directions if needed
-        // par0.setDirection(DcMotorSimple.Direction.REVERSE);
+        par0.setDirection(DcMotorSimple.Direction.REVERSE);
+        par1.setDirection(DcMotorSimple.Direction.REVERSE);
+        perp.setDirection(DcMotorSimple.Direction.REVERSE);
+        octoQuad.saveParametersToFlash();
 
         this.inPerTick = inPerTick;
 
