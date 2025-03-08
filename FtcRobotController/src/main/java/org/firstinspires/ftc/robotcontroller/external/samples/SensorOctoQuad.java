@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -55,7 +56,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See the sensor's product page: https://www.tindie.com/products/35114/
  */
 @TeleOp(name = "OctoQuad Basic", group="OctoQuad")
-@Disabled
 public class SensorOctoQuad extends LinearOpMode {
 
     // Identify which encoder OctoQuad inputs are connected to each odometry pod.
@@ -77,7 +77,7 @@ public class SensorOctoQuad extends LinearOpMode {
     public void runOpMode() {
 
         // Connect to OctoQuad by referring to its name in the Robot Configuration.
-        octoquad = hardwareMap.get(OctoQuad.class, "octoquad");
+        octoquad = hardwareMap.get(OctoQuad.class, "octo");
 
         // Read the Firmware Revision number from the OctoQuad and display it as telemetry.
         telemetry.addData("OctoQuad Firmware Version ", octoquad.getFirmwareVersion());
@@ -85,7 +85,7 @@ public class SensorOctoQuad extends LinearOpMode {
         // Reverse the count-direction of any encoder that is not what you require.
         // e.g. if you push the robot forward and the left encoder counts down, then reverse it so it counts up.
         octoquad.setSingleEncoderDirection(ODO_LEFT,  OctoQuad.EncoderDirection.REVERSE);
-        octoquad.setSingleEncoderDirection(ODO_RIGHT, OctoQuad.EncoderDirection.FORWARD);
+        octoquad.setSingleEncoderDirection(ODO_RIGHT, OctoQuad.EncoderDirection.REVERSE);
         octoquad.setSingleEncoderDirection(ODO_PERP,  OctoQuad.EncoderDirection.FORWARD);
 
         // Any changes that are made should be saved in FLASH just in case there is a sensor power glitch.
@@ -120,6 +120,9 @@ public class SensorOctoQuad extends LinearOpMode {
             telemetry.addData("Left ", "%8d counts", posLeft);
             telemetry.addData("Right", "%8d counts", posRight);
             telemetry.addData("Perp ", "%8d counts", posPerp);
+            telemetry.addData("LeftV ", "%8d counts", octoquad.readSingleVelocity(ODO_LEFT));
+            telemetry.addData("RightV", "%8d counts", octoquad.readSingleVelocity(ODO_RIGHT));
+            telemetry.addData("PerpV ", "%8d counts", octoquad.readSingleVelocity(ODO_PERP));
             telemetry.update();
         }
     }
