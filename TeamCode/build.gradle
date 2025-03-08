@@ -15,7 +15,7 @@
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 apply plugin: 'org.jetbrains.kotlin.android'
-
+android.buildFeatures.buildConfig = true
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
     kotlinOptions {
