@@ -8,6 +8,7 @@ import kotlin.math.abs
 import kotlin.math.max
 import com.qualcomm.robotcore.hardware.DcMotor
 
+
 @TeleOp(name = "Basic")
 class BasicOpMode : LinearOpMode() {
     lateinit var r: Robot
@@ -85,11 +86,23 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("Hand power", r.hand.power)
         r.dashboardTelemetry.addData("Right Bumper", gamepad2.right_bumper)
 
+        // Wrist
+        if (gamepad2.dpad_right) {
+            r.wrist.turn(.3)
+            Thread.sleep(500)
+        } else if (gamepad2.dpad_left) {
+            r.wrist.turn(-.3)
+            Thread.sleep(500)
+        } else {
+            r.wrist.turn(0.0)
+        }
 
-        if (gamepad2.dpad_left) {
-            r.wrist.twist(0.5)
-        } else if (gamepad2.dpad_right) {
-            r.wrist.twist(-0.5)
+        if (gamepad2.dpad_up) {
+            r.wrist.twist(0.3)
+            Thread.sleep(100)
+        } else if (gamepad2.dpad_down) {
+            r.wrist.twist(-0.3)
+            Thread.sleep(100)
         } else {
             r.wrist.twist(0.0)
         }
