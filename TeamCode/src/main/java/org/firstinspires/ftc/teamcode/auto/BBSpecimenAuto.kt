@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.supers.Robot
 
 @Autonomous(name = "BB Specimen")
-class BBSpecimenAuto : LinearOpMode() {
+class BTSpecimenAuto : LinearOpMode() {
     lateinit var r: Robot
 
     override fun runOpMode() {
@@ -20,35 +20,21 @@ class BBSpecimenAuto : LinearOpMode() {
         val fullAction = SequentialAction(
             r.drive.actionBuilder(r.startPose)
                 .strafeTo(Vector2d(0.00, 40.00))
-                .build(),
+                .afterDisp(0.0, r.ArmAndWristToPickup())
 
-            r.ArmAndWristToPickup(),
-
-            r.drive.actionBuilder(r.drive.localizer.pose)
                 .strafeTo(Vector2d(-49.00, 38.00))
-                .build(),
+                .afterDisp(0.0, r.ArmToSecondBar())
 
-            r.ArmToSecondBar(),
-
-            r.drive.actionBuilder(r.drive.localizer.pose)
                 .strafeTo(Vector2d(0.00, 40.00))
-                .build(),
+                .afterDisp(0.0, r.ArmAndWristToPickup())
 
-            r.ArmAndWristToPickup(),
-
-            r.drive.actionBuilder(r.drive.localizer.pose)
                 .strafeTo(Vector2d(-59.00, 38.00))
-                .build(),
+                .afterDisp(0.0, r.ArmToSecondBar())
 
-            r.ArmToSecondBar(),
-
-            r.drive.actionBuilder(r.drive.localizer.pose)
                 .strafeTo(Vector2d(0.00, 40.00))
-                .build(),
+                .afterDisp(0.0, r.ArmAndWristToPickup())
 
-            r.ArmAndWristToPickup(),
-
-            r.drive.actionBuilder(r.drive.localizer.pose)
+                .afterDisp(0.0, r.ArmToHome())
                 .strafeTo(Vector2d(36.00, 40.00))
                 .splineTo(Vector2d(26.00, 12.00), Math.toRadians(180.00))
                 .build()
