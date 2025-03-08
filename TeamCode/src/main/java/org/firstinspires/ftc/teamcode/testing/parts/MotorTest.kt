@@ -18,10 +18,13 @@ class MotorTest : LinearOpMode() {
                 motor.power = gamepad1.left_stick_y.toDouble()
             }
 
+            var voltage = hardwareMap.voltageSensor.iterator().next()
+
             r.dashboardTelemetry.addData("lf", r.lf.currentPosition)
             r.dashboardTelemetry.addData("lb", r.lb.currentPosition)
             r.dashboardTelemetry.addData("rf", r.rf.currentPosition)
-            r.dashboardTelemetry.addData("rb", r.lb.currentPosition)
+            r.dashboardTelemetry.addData("rb", r.rb.currentPosition)
+            r.dashboardTelemetry.addData("lf-volt", voltage.voltage)
             r.dashboardTelemetry.update()
         }
     }
