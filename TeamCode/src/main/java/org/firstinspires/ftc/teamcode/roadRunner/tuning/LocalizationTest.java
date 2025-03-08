@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.roadRunner.Drawing;
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.roadRunner.TankDrive;
+import org.firstinspires.ftc.teamcode.roadRunner.ThreeDeadWheelLocalizer;
 
 public class LocalizationTest extends LinearOpMode {
     @Override
@@ -19,6 +20,7 @@ public class LocalizationTest extends LinearOpMode {
 
         if (TuningOpModes.DRIVE_CLASS.equals(MecanumDrive.class)) {
             MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+            ThreeDeadWheelLocalizer wheelLocalizer = (ThreeDeadWheelLocalizer) drive.localizer;
 
             waitForStart();
 
@@ -37,6 +39,9 @@ public class LocalizationTest extends LinearOpMode {
                 telemetry.addData("x", pose.position.x);
                 telemetry.addData("y", pose.position.y);
                 telemetry.addData("heading (deg)", Math.toDegrees(pose.heading.toDouble()));
+                telemetry.addData("Vel0", wheelLocalizer.par0.getPositionAndVelocity().velocity * wheelLocalizer.inPerTick);
+                telemetry.addData("Vel1", wheelLocalizer.par1.getPositionAndVelocity().velocity * wheelLocalizer.inPerTick);
+                telemetry.addData("VelPerp", wheelLocalizer.perp.getPositionAndVelocity().velocity * wheelLocalizer.inPerTick);
                 telemetry.update();
 
                 TelemetryPacket packet = new TelemetryPacket();
