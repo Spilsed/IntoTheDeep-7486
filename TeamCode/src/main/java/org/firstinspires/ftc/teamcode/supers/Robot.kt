@@ -42,6 +42,16 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
 
     // Sensors
     var armHomingTouch: DigitalChannel
+    var limelight: Limelight3A
+    var distanceSensorRF : DistanceSensor
+    var distanceSensorLF : DistanceSensor
+    var distanceSensorLB : DistanceSensor
+    var distanceSensorLL : DistanceSensor
+    var distanceSensorLR : DistanceSensor
+    var distanceSensorRB : DistanceSensor
+    var distanceSensorRL : DistanceSensor
+    var distanceSensorRR : DistanceSensor
+    var colorSensor : ColorSensor
 
     // Lights
     var frontLight: Light
@@ -129,6 +139,17 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         allLights.color = 0.640
 
         drive = MecanumDrive(hardwareMap, startPose)
+
+        imu = hardwareMap.get(BNO055IMU::class.java, "imu")
+        distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "r-distance")
+        distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "l-distance")
+        distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
+        distanceSensorRL = hardwareMap.get(DistanceSensor::class.java, "rl-distance")
+        distanceSensorLR = hardwareMap.get(DistanceSensor::class.java, "lr-distance")
+        distanceSensorLL = hardwareMap.get(DistanceSensor::class.java, "ll-distance")
+        distanceSensorRB = hardwareMap.get(DistanceSensor::class.java, "rb-distance")
+        distanceSensorLB = hardwareMap.get(DistanceSensor::class.java, "lb-distance")
+        colorSensor = hardwareMap.get(ColorSensor::class.java, "wrist-color")
     }
 
     fun update() {
