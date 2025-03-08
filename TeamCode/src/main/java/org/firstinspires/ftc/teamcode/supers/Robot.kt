@@ -57,6 +57,7 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     var distanceSensorRB: DistanceSensor
     var distanceSensorRL: DistanceSensor
     var distanceSensorRR: DistanceSensor
+   // var distanceSensorLB: DistanceSensor
     var colorSensor: ColorSensor
 
     // Lights
@@ -148,14 +149,14 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
 
         imu = hardwareMap.get(BNO055IMU::class.java, "imu")
         limelight = hardwareMap.get(Limelight3A::class.java, "limelight")
-        distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "r-distance")
-        distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "l-distance")
-        distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
-        distanceSensorRL = hardwareMap.get(DistanceSensor::class.java, "rl-distance")
-        distanceSensorLR = hardwareMap.get(DistanceSensor::class.java, "lr-distance")
-        distanceSensorLL = hardwareMap.get(DistanceSensor::class.java, "ll-distance")
-        distanceSensorRB = hardwareMap.get(DistanceSensor::class.java, "rb-distance")
-        distanceSensorLB = hardwareMap.get(DistanceSensor::class.java, "lb-distance")
+        distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "rf-distance")
+        distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "lf-distance")
+       // distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
+       // distanceSensorRL = hardwareMap.get(DistanceSensor::class.java, "rl-distance")
+      //  distanceSensorLR = hardwareMap.get(DistanceSensor::class.java, "lr-distance")
+      //  distanceSensorLL = hardwareMap.get(DistanceSensor::class.java, "ll-distance")
+       // distanceSensorRB = hardwareMap.get(DistanceSensor::class.java, "rb-distance")
+       // distanceSensorLB = hardwareMap.get(DistanceSensor::class.java, "lb-distance")
         colorSensor = hardwareMap.get(ColorSensor::class.java, "wrist-color")
     }
 
