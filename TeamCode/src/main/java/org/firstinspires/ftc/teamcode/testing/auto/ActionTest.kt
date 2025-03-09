@@ -12,20 +12,25 @@ class ActionTest: LinearOpMode() {
     lateinit var r: Robot
 
     override fun runOpMode() {
-        r = Robot(this, true)
+        r = Robot(this, auto = true)
 
         waitForStart()
 
-        runBlocking(
-            SequentialAction(
-                r.GoodLights(),
-                r.ArmToSecondBar(),
-                r.WorkingLights(),
-                SleepAction(3.0),
-                r.BadLights(),
-                r.ArmToHome()
-            )
-        )
+//        runBlocking(
+//            r.ArmToHighBasket()
+//        )
+
+        runBlocking(r.SlideExtend())
+        runBlocking(r.WristDown())
+        sleep(1000)
+        runBlocking(r.WristStop())
+        runBlocking(r.SweeperOut())
+        sleep(500)
+        runBlocking(r.SweeperOff())
+        runBlocking(r.WristUp())
+        sleep(1000)
+        runBlocking(r.WristStop())
+        runBlocking(r.SlideToHome())
 
         telemetry.addData("Arm-b", r.rotationalArm.motor1.isBusy)
         telemetry.addData("Arm", r.rotationalArm.motor1.targetPosition)

@@ -8,7 +8,6 @@ import kotlin.math.abs
 import kotlin.math.max
 
 @Autonomous(name = "GoRight")
-@Disabled
 class GoRight : LinearOpMode() {
     lateinit var r: Robot
     private var speedFactor: Double = 0.8

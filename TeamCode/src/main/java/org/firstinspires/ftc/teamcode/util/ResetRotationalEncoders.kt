@@ -17,6 +17,9 @@ class ResetRotationalEncoders : LinearOpMode() {
         r.rotationalArm.motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
         r.rotationalArm.motor2.mode = DcMotor.RunMode.RUN_USING_ENCODER
 
+        r.linearActuator.motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        r.linearActuator.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
         telemetry.addData("Motor1", r.rotationalArm.motor1.currentPosition)
         telemetry.addData("Motor2", r.rotationalArm.motor2.currentPosition)
         if (r.rotationalArm.motor1.currentPosition == 0 && r.rotationalArm.motor2.currentPosition == 0) {

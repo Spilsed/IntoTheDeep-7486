@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.CRServo
 import org.firstinspires.ftc.teamcode.util.clampf
 import kotlin.math.abs
+import kotlin.math.log
+import kotlin.math.pow
 import kotlin.math.sign
 
 class AxonServo(val servo: CRServo, val analog: AnalogInput) {
@@ -27,8 +29,8 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput) {
 
     // Set the power so it moves towards the target position
     fun updatePosition() {
-        if (abs(position - targetPosition) >= 0.01) {
-            servo.power = sign(targetPosition - position) * 0.5
+        if (abs(position - targetPosition) >= 0.05) {
+            servo.power = sign(targetPosition - position) * (targetPosition - position).pow(2)
         } else {
             servo.power = 0.0
         }

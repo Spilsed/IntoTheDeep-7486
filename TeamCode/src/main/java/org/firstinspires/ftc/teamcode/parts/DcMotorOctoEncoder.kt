@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode.parts
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuad
 import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 
-class DcMotorOctoEncoder(val motor: DcMotor, private val octoQuad: OctoQuad, private val octoId: Int) : DcMotor by motor {
+class DcMotorOctoEncoder(val motor: DcMotorEx, private val octoQuad: OctoQuad, private val octoId: Int) : DcMotorEx by motor {
     override fun getCurrentPosition(): Int {
         return octoQuad.readSinglePosition(octoId)
     }

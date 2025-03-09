@@ -13,30 +13,29 @@ class RBSpecimenAuto : LinearOpMode() {
     lateinit var r: Robot
 
     override fun runOpMode() {
-        r = Robot(this, auto = true, Pose2d(Vector2d(12.00, -65.00), Math.toRadians(-90.00)))
+        r = Robot(this, auto = true, Pose2d(Vector2d(-12.00, 65.00), Math.toRadians(-90.00)))
 
         waitForStart()
 
         val fullAction = SequentialAction(
             r.drive.actionBuilder(r.startPose)
-                .strafeTo(Vector2d(0.00, -40.00))
-                .afterDisp(0.0, r.ArmAndWristToPickup())
+                .strafeTo(Vector2d(0.00, 40.00))
+               // .afterDisp(0.0, r.ArmAndWristToPickup())
 
-                .strafeTo(Vector2d(49.00, -38.00))
-                .afterDisp(0.0, r.ArmToSecondBar())
+                .strafeTo(Vector2d(49.00, 38.00))
+               // .afterDisp(0.0, r.ArmToSecondBar())
 
-                .strafeTo(Vector2d(0.00, -40.00))
-                .afterDisp(0.0, r.ArmAndWristToPickup())
+                .strafeTo(Vector2d(0.00, 40.00))
+              //  .afterDisp(0.0, r.ArmAndWristToPickup())
 
-                .strafeTo(Vector2d(59.00, -38.00))
-                .afterDisp(0.0, r.ArmToSecondBar())
+                .strafeTo(Vector2d(59.00, 38.00))
+              //  .afterDisp(0.0, r.ArmToSecondBar())
 
-                .strafeTo(Vector2d(0.00, -40.00))
-                .afterDisp(0.0, r.ArmAndWristToPickup())
+                .strafeTo(Vector2d(0.00, 40.00))
+              //  .afterDisp(0.0, r.ArmAndWristToPickup())
 
-                .afterDisp(0.0, r.ArmToHome())
-                .strafeTo(Vector2d(-36.00, -40.00))
-                .splineTo(Vector2d(-26.00, -12.00), Math.toRadians(180.00))
+                .strafeTo(Vector2d(-36.00, 40.00))
+                .splineTo(Vector2d(-26.00, 12.00), Math.toRadians(0.00))
                 .build()
         )
 

@@ -2,29 +2,66 @@ package org.firstinspires.ftc.teamcode.parts
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.util.clampi
-import kotlin.math.max
+import kotlin.math.abs
 
-open class LinearSlide(open val motor: DcMotor, private val ppr: Double, private val ratio: Double) {
+class LinearSlide(val motor: DcMotor, private val ppr: Double, private val ratio: Double, auto: Boolean) {
     // Ratio is rotations/inch
-    var zeroPosition: Int = -20
-    private val maxPosition: Int = motor.currentPosition + inchesToTicks(12.0)
+    var min: Int = -1200
+    var max: Int = 40
+
+    var limited: Boolean = true
+    private val zeroModifier: Int = -1
 
     init {
-        motor.targetPosition = motor.currentPosition
-        motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-        motor.power = 0.4
+        if (auto) {
+            motor.targetPosition = motor.currentPosition
+            motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motor.power = 0.4
+        } else {
+            motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        }
+        motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
 
-    fun extend(delta: Double) {
-        motor.targetPosition = clampi(inchesToTicks(delta) + motor.currentPosition, zeroPosition, maxPosition)
+    var targetPosition: Int = motor.currentPosition
+        set(value) {
+            field = value // clampi(value, min, max)
+            motor.targetPosition = field
+            motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motor.power = 0.5
+        }
+
+    val currentPosition: Int
+        get() = motor.currentPosition
+
+    val isAtTarget: Boolean
+        get() = abs(currentPosition - targetPosition) < 20
+
+    var power: Double = 0.0
+        set(value) {
+            field = if (limited) limitPower(value, motor.currentPosition) else value
+            motor.power = field
+        }
+
+    private fun limitPower(power: Double, position: Int): Double {
+        return if (position >= max && power * zeroModifier <= 0.0) {
+            0.0
+        } else if (position <= min && power * zeroModifier >= 0.0) {
+            0.0
+        } else {
+            power
+
+            // As value approaches a maximum decrease the maximum speed of the motor
+            // clampf(abs(power), 0.1, log((min(abs(position - min), abs(position - max)).toDouble() + 50) / 50, 10.0)) * sign(power)
+        }
     }
 
-    fun extendTicks(delta: Int) {
-        motor.targetPosition = motor.currentPosition + delta
-    }
+    fun update() {
+        power = limitPower(power, motor.currentPosition)
 
-    fun returnToZero() {
-        motor.targetPosition = zeroPosition
+        if (isAtTarget) {
+            motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        }
     }
 
     private fun inchesToTicks(inches: Double): Int {
@@ -42,6 +79,7 @@ class ContLinearSlide(val motor: DcMotor, private val ppr: Double, private val r
 
     init {
         motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
 
     var power: Double = 0.0

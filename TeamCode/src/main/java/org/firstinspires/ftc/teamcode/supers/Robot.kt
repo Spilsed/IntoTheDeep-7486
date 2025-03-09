@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.parts.ContLinearSlide
 import org.firstinspires.ftc.teamcode.parts.DcMotorOctoEncoder
 import org.firstinspires.ftc.teamcode.parts.Light
 import org.firstinspires.ftc.teamcode.parts.LightArray
+import org.firstinspires.ftc.teamcode.parts.LinearSlide
 import org.firstinspires.ftc.teamcode.parts.ManualWristCont
 import org.firstinspires.ftc.teamcode.parts.RotationalArm
 import org.firstinspires.ftc.teamcode.roadRunner.MecanumDrive
@@ -41,23 +42,23 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     // Robot Parts
     var hand: CRServo
     var wrist: ManualWristCont
-    var linearActuator: ContLinearSlide
+    var linearActuator: LinearSlide
     var rotationalArm: RotationalArm
     var lift: Lift
 
     // Sensors
     var armHomingTouch: DigitalChannel
     var imu: BNO055IMU
-    var limelight: Limelight3A
-    var distanceSensorRF: DistanceSensor
-    var distanceSensorLF: DistanceSensor
-    var distanceSensorLB: DistanceSensor
-    var distanceSensorLL: DistanceSensor
-    var distanceSensorLR: DistanceSensor
-    var distanceSensorRB: DistanceSensor
-    var distanceSensorRL: DistanceSensor
-    var distanceSensorRR: DistanceSensor
-   // var distanceSensorLB: DistanceSensor
+    // var limelight: Limelight3A
+//    var distanceSensorRF: DistanceSensor
+//    var distanceSensorLF: DistanceSensor
+//    var distanceSensorLB: DistanceSensor
+//    var distanceSensorLL: DistanceSensor
+//    var distanceSensorLR: DistanceSensor
+//    var distanceSensorRB: DistanceSensor
+//    var distanceSensorRL: DistanceSensor
+//    var distanceSensorRR: DistanceSensor
+//   // var distanceSensorLB: DistanceSensor
     var colorSensor: ColorSensor
 
     // Lights
@@ -107,11 +108,12 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         hand = hardwareMap.get(CRServo::class.java, "hand")
         wrist = ManualWristCont(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(CRServo::class.java, "wrist2"))
         // wrist = Wrist(AxonCRServo(hardwareMap.get(CRServo::class.java, "wrist1"), hardwareMap.get(AnalogInput::class.java, "analog1")), AxonServo(hardwareMap.get(CRServo::class.java, "wrist2"), hardwareMap.get(AnalogInput::class.java, "analog1")))
-        linearActuator = ContLinearSlide(DcMotorOctoEncoder(
-            hardwareMap.get(DcMotor::class.java, "la") as DcMotorEx, octoQuad, 2),
+        linearActuator = LinearSlide(
+            hardwareMap.get(DcMotor::class.java, "la"),
             537.7,
-            5.2
-        )
+            0.2105263,
+            auto
+        ) //0.2105263 rot/inch
 
         rotationalArm = RotationalArm(
             hardwareMap.get(DcMotor::class.java, "arm1"),
@@ -148,15 +150,15 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         drive = MecanumDrive(hardwareMap, startPose)
 
         imu = hardwareMap.get(BNO055IMU::class.java, "imu")
-        limelight = hardwareMap.get(Limelight3A::class.java, "limelight")
-        distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "rf-distance")
-        distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "lf-distance")
-       // distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
-       // distanceSensorRL = hardwareMap.get(DistanceSensor::class.java, "rl-distance")
-      //  distanceSensorLR = hardwareMap.get(DistanceSensor::class.java, "lr-distance")
-      //  distanceSensorLL = hardwareMap.get(DistanceSensor::class.java, "ll-distance")
-       // distanceSensorRB = hardwareMap.get(DistanceSensor::class.java, "rb-distance")
-       // distanceSensorLB = hardwareMap.get(DistanceSensor::class.java, "lb-distance")
+        // limelight = hardwareMap.get(Limelight3A::class.java, "limelight")
+        // distanceSensorRF = hardwareMap.get(DistanceSensor::class.java, "rf-distance")
+        // distanceSensorLF = hardwareMap.get(DistanceSensor::class.java, "lf-distance")
+        // distanceSensorRR = hardwareMap.get(DistanceSensor::class.java, "rr-distance")
+        // distanceSensorRL = hardwareMap.get(DistanceSensor::class.java, "rl-distance")
+        // distanceSensorLR = hardwareMap.get(DistanceSensor::class.java, "lr-distance")
+        // distanceSensorLL = hardwareMap.get(DistanceSensor::class.java, "ll-distance")
+        // distanceSensorRB = hardwareMap.get(DistanceSensor::class.java, "rb-distance")
+        // distanceSensorLB = hardwareMap.get(DistanceSensor::class.java, "lb-distance")
         colorSensor = hardwareMap.get(ColorSensor::class.java, "wrist-color")
     }
 
@@ -165,19 +167,29 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         backLight.update()
 
         // If the arm touches the sensor set that as the minimum
-//        if (armHomingTouch.state) {
-//            rotationalArm.min = rotationalArm.motor1.currentPosition
-//        }
+        if (armHomingTouch.state && rotationalArm.motor1.currentPosition != 0) {
+            rotationalArm.motor1.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+            rotationalArm.motor1.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        }
 
         rotationalArm.update()
+        linearActuator.update()
     }
 
     // Actions
     // Arm actions
-    inner class ArmToHome : Action {
+    inner class ArmToHome: Action {
         override fun run(p: TelemetryPacket): Boolean {
             rotationalArm.targetPosition = 0
             return !rotationalArm.isAtTarget
+        }
+    }
+
+    inner class SlideToHome: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            linearActuator.targetPosition = 0
+            return false
+            // return !linearActuator.isAtTarget
         }
     }
 
@@ -194,6 +206,27 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
         }
     }
 
+    inner class ArmToHighBasket: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            rotationalArm.targetPosition = -3500
+            dashboardTelemetry.addData("Arm-Position", rotationalArm.currentPosition)
+            dashboardTelemetry.addData("Arm-Target-Position", rotationalArm.targetPosition)
+            dashboardTelemetry.update()
+            return false
+            // return !rotationalArm.isAtTarget
+        }
+    }
+
+    inner class SlideExtend: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            linearActuator.targetPosition = -1200
+            dashboardTelemetry.addData("Position", linearActuator.currentPosition)
+            dashboardTelemetry.addData("Target-Position", linearActuator.targetPosition)
+            dashboardTelemetry.update()
+            return !linearActuator.isAtTarget
+        }
+    }
+
     // Wrist actions
     inner class WristToHome : Action {
         override fun run(p: TelemetryPacket): Boolean {
@@ -204,6 +237,51 @@ class Robot(opMode: OpMode, auto: Boolean = false, val startPose: Pose2d = Pose2
     inner class WristToSecondBar : Action {
         override fun run(p: TelemetryPacket): Boolean {
             TODO("Not yet implemented")
+        }
+    }
+
+    inner class WristDown: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            wrist.lServo.power = -0.25
+            wrist.rServo.power = -0.25
+            return false
+        }
+    }
+
+    inner class WristUp: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            wrist.lServo.power = 0.25
+            wrist.rServo.power = 0.25
+            return false
+        }
+    }
+
+    inner class WristStop: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            wrist.lServo.power = 0.0
+            wrist.rServo.power = 0.0
+            return false
+        }
+    }
+
+    inner class SweeperOff: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            hand.power = 0.0
+            return false
+        }
+    }
+
+    inner class SweeperIn: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            hand.power = -1.0
+            return false
+        }
+    }
+
+    inner class SweeperOut: Action {
+        override fun run(p: TelemetryPacket): Boolean {
+            hand.power = 1.0
+            return false
         }
     }
 

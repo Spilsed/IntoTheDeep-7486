@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto
 
+import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.Pose2d
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.Vector2d
@@ -16,13 +17,38 @@ class BFSampleAuto : LinearOpMode() {
 
         waitForStart()
 
-        val fullAction = r.drive.actionBuilder(r.startPose)
-            .strafeTo(Vector2d(54.00, 53.00))
-            .turn(-45.00)
-            .strafeTo(Vector2d(35.55, 40.58))
-            .splineTo(Vector2d(25.00, -14.00), Math.toRadians(180.00))
-            .build()
+        runBlocking(
+            r.drive.actionBuilder(r.startPose)
+                .splineTo(Vector2d(55.00, 55.00), Math.toRadians(45.00))
+                .afterDisp(1.0, r.ArmToHighBasket())
+                .waitSeconds(3.5)
+//                .afterTime(3.5, r.SlideExtend())
+//                .afterTime(2.5, r.WristDown())
+//                .afterTime(1.0, SequentialAction(r.WristStop(), r.SweeperOut()))
+//                .afterTime(0.5, SequentialAction(r.SweeperOff(), r.WristUp()))
+//                .afterTime(1.0, SequentialAction(r.WristStop(), r.SlideToHome()))
+                .build()
+        )
 
-        runBlocking(fullAction)
+        runBlocking(r.SlideExtend())
+        runBlocking(r.WristDown())
+        sleep(1000)
+        runBlocking(r.WristStop())
+        runBlocking(r.SweeperOut())
+        sleep(500)
+        runBlocking(r.SweeperOff())
+        runBlocking(r.WristUp())
+        sleep(1000)
+        runBlocking(r.WristStop())
+        runBlocking(r.SlideToHome())
+
+        runBlocking(
+            r.drive.actionBuilder(r.drive.localizer.pose)
+                .setReversed(true)
+                .splineTo(Vector2d(36.00, 36.00), Math.toRadians(-90.00))
+                .afterDisp(5.0, ParallelAction(r.SweeperOff(), r.ArmToHome(), r.SlideToHome()))
+                .splineTo(Vector2d(25.00, -14.00), Math.toRadians(180.00))
+                .build()
+        )
     }
 }

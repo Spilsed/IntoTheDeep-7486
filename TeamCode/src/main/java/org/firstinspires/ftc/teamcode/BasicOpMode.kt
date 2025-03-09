@@ -15,13 +15,17 @@ class BasicOpMode : LinearOpMode() {
     private var speedFactor: Double = 0.8
     private var motorPowers: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
+    private var gamepad1Shutdown: Boolean = false
+
     override fun runOpMode() {
         r = Robot(this)
 
         waitForStart()
 
         while (opModeIsActive()) {
-            gamepad1Logic()
+            if (!gamepad1Shutdown) {
+                gamepad1Logic()
+            }
             gamepad2Logic()
 
             // Update gamepad states
@@ -48,11 +52,11 @@ class BasicOpMode : LinearOpMode() {
     private fun gamepad2Logic() {
         // Linear Actuator
         if (gamepad2.a) {
-            r.linearActuator.motor.power = -0.4
+            r.linearActuator.power = -0.4
         } else if (gamepad2.b) {
-            r.linearActuator.motor.power = 0.4
+            r.linearActuator.power = 0.4
         } else {
-            r.linearActuator.motor.power = 0.0
+            r.linearActuator.power = 0.0
         }
 
         r.dashboardTelemetry.addData("LAct", r.linearActuator.motor.currentPosition)
@@ -61,11 +65,12 @@ class BasicOpMode : LinearOpMode() {
         r.dashboardTelemetry.addData("Homing", r.armHomingTouch.state)
         r.dashboardTelemetry.addData("ROT-Pos", r.rotationalArm.motor1.currentPosition)
         r.dashboardTelemetry.addData("ROT-Pos2", r.rotationalArm.motor2.currentPosition)
-    //    r.rotationalArm.extend(gamepad2.left_stick_y.toDouble())
+        r.rotationalArm.power = gamepad2.left_stick_y.toDouble()
         r.dashboardTelemetry.addData("ROT-Pow", r.rotationalArm.power)
         r.dashboardTelemetry.addData("ROT-MPow", r.rotationalArm.motor1.power)
         r.dashboardTelemetry.addData("ROT-Mode", r.rotationalArm.motor1.mode)
         r.dashboardTelemetry.addData("ROT-Min", r.rotationalArm.min)
+        r.dashboardTelemetry.addData("ROT-Max", r.rotationalArm.max)
         r.dashboardTelemetry.addData("ROT-MinStop", r.rotationalArm.motor1.currentPosition <= r.rotationalArm.min && r.rotationalArm.power * r.rotationalArm.zeroModifier < 0.0)
 
         if ((!r.gamepadState2.start && gamepad2.start) && (!r.gamepadState2.back && gamepad2.back)) {
@@ -88,28 +93,44 @@ class BasicOpMode : LinearOpMode() {
 
         // Wrist
         if (gamepad2.dpad_right) {
-            r.wrist.turn(.3)
-            Thread.sleep(500)
+            r.wrist.turn(1.0)
         } else if (gamepad2.dpad_left) {
-            r.wrist.turn(-.3)
-            Thread.sleep(500)
+            r.wrist.turn(-1.0)
         } else {
             r.wrist.turn(0.0)
         }
 
         if (gamepad2.dpad_up) {
-            r.wrist.twist(0.3)
-            Thread.sleep(100)
+            r.wrist.twist(1.0)
         } else if (gamepad2.dpad_down) {
-            r.wrist.twist(-0.3)
-            Thread.sleep(100)
+            r.wrist.twist(-1.0)
         } else {
             r.wrist.twist(0.0)
         }
 
+//        if (gamepad2.dpad_right) {
+//            r.wrist.lServo.power = 1.0
+//        } else if (gamepad2.dpad_left) {
+//            r.wrist.lServo.power = -1.0
+//        } else {
+//            r.wrist.lServo.power = 0.0
+//        }
+//        if (gamepad2.dpad_up) {
+//            r.wrist.rServo.power = 1.0
+//        } else if (gamepad2.dpad_down) {
+//            r.wrist.rServo.power = -1.0
+//        } else {
+//            r.wrist.rServo.power = 0.0
+//        }
+
         r.lift.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         r.lift.motor.power = gamepad2.right_stick_y.toDouble()
         r.lift.servo.power = gamepad2.right_stick_x.toDouble()
+
+        // Gamepad1 shutdown
+        if (gamepad2.y && !r.gamepadState2.y) {
+            gamepad1Shutdown = !gamepad1Shutdown
+        }
     }
 
     private fun mecanumDrive() {

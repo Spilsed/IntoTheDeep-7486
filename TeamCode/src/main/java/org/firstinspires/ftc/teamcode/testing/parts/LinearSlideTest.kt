@@ -10,7 +10,7 @@ class LinearSlideTest : LinearOpMode() {
     override fun runOpMode() {
         val r = Robot(this)
         r.linearActuator.motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        r.linearActuator.zeroPosition = -10000
+        // r.linearActuator.zeroPosition = -10000
 
         waitForStart()
 
